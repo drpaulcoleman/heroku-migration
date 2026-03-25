@@ -1227,8 +1227,8 @@ html, body {
         <span style="color:#79c0ff;font-weight:600;">GCP Google-Managed SSL:</span>
         Provisions a <strong>Google Trust Services</strong> cert automatically on the Global HTTPS LB.
         TLS terminates at <strong>GCP's Load Balancer</strong> — Cloud Run receives HTTP/2 internally.
-        Point your DNS A record to the LB IP (<code class="mono">34.111.232.101</code> for this project).
-        Cert is <em>per-LB-frontend</em>, attached to the target HTTPS proxy — not the Cloud Run service directly.
+        Point your DNS <strong>A record</strong> to the LB IP (<code class="mono">gcp static app ip</code>).<br/>
+        The cert is <em>per-LB-frontend</em>, attached to the target HTTPS proxy — not the Cloud Run service directly.
         Custom upload: <code class="mono">gcloud compute ssl-certificates create --certificate=cert.pem --private-key=key.pem</code>.
       </div>
     </div>
