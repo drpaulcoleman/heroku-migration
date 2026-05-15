@@ -122,7 +122,7 @@ html, body {
 #viewport::-webkit-scrollbar-thumb { background: #3d2860; border-radius: 4px; }
 #viewport::-webkit-scrollbar-corner { background: #0d0b18; }
 #canvas {
-  position: relative; min-width: 4100px; min-height: 11600px;
+  position: relative; min-width: 4100px; min-height: 15920px;
   transform-origin: 0 0; will-change: transform;
 }
 
@@ -494,6 +494,91 @@ html, body {
 }
 .leg-item { display:flex; align-items:center; gap:5px; color:#9b8ab0; }
 .leg-swatch { width:10px; height:10px; border-radius:2px; flex-shrink:0; }
+
+/* ══════════════════════════════════════════════════════════════════════════
+   ASK AI COACH WIDGET
+══════════════════════════════════════════════════════════════════════════ */
+#ai-coach {
+  position:fixed; top:62px; right:16px; z-index:1100;
+  font-family:'Segoe UI',system-ui,-apple-system,sans-serif;
+}
+#ai-coach .ai-coach-toggle {
+  display:inline-flex; align-items:center; gap:6px;
+  background:linear-gradient(135deg,#430098 0%,#6762a6 100%);
+  color:#fff; border:1px solid rgba(255,255,255,0.2); border-radius:6px;
+  padding:7px 12px 7px 10px; font-size:12.1px; font-weight:600;
+  letter-spacing:0.03em; cursor:pointer;
+  box-shadow:0 4px 12px rgba(67,0,152,0.35);
+  transition:transform .15s,box-shadow .15s;
+}
+#ai-coach .ai-coach-toggle:hover {
+  transform:translateY(-1px);
+  box-shadow:0 6px 18px rgba(67,0,152,0.5);
+}
+#ai-coach .ai-coach-icon { font-size:14px; line-height:1; }
+#ai-coach .ai-coach-panel {
+  position:absolute; top:40px; right:0; width:370px;
+  background:#0d0b18; border:1px solid rgba(121,88,159,0.45);
+  border-radius:10px; box-shadow:0 12px 36px rgba(0,0,0,0.6);
+  padding:16px 18px 14px; font-size:12.5px; color:#c9b8e0;
+  line-height:1.55; max-height:calc(100vh - 120px); overflow-y:auto;
+}
+#ai-coach .ai-coach-panel[hidden] { display:none; }
+#ai-coach .ai-coach-panel h4 {
+  font-size:13px; font-weight:700; color:#b094d0;
+  margin:0 0 6px; padding:0; border:none; letter-spacing:0.03em;
+}
+#ai-coach .ai-coach-section {
+  font-family:'Cascadia Code','Fira Code','Consolas',monospace;
+  font-size:10.5px; color:#5a4870; letter-spacing:0.06em;
+  text-transform:uppercase; margin:0 0 10px;
+}
+#ai-coach .ai-coach-section strong { color:#e2d4f0; font-weight:700; }
+#ai-coach .ai-coach-help {
+  font-size:11.5px; color:#9b8ab0; margin:0 0 10px; padding:8px 10px;
+  background:rgba(121,88,159,0.08); border-left:2px solid #79589f;
+  border-radius:4px;
+}
+#ai-coach .ai-coach-prompts { list-style:none; margin:0; padding:0; }
+#ai-coach .ai-coach-prompts li { margin:0 0 7px; }
+#ai-coach .ai-coach-prompt {
+  width:100%; text-align:left; background:rgba(0,0,0,0.35);
+  border:1px solid rgba(121,88,159,0.3); border-radius:6px;
+  color:#e2d4f0; padding:9px 30px 9px 12px;
+  font-family:'Segoe UI',system-ui,sans-serif; font-size:12.5px;
+  line-height:1.45; cursor:pointer; position:relative;
+  transition:background .15s,border-color .15s;
+}
+#ai-coach .ai-coach-prompt::after {
+  content:"copy"; position:absolute; right:8px; top:8px;
+  font-size:9px; font-family:'Cascadia Code','Fira Code',monospace;
+  color:#5a4870; letter-spacing:0.06em; text-transform:uppercase;
+  opacity:0; transition:opacity .15s;
+}
+#ai-coach .ai-coach-prompt:hover {
+  background:rgba(121,88,159,0.15); border-color:#79589f;
+}
+#ai-coach .ai-coach-prompt:hover::after { opacity:0.85; }
+#ai-coach .ai-coach-prompt.copied {
+  background:rgba(52,168,83,0.15); border-color:#34A853;
+}
+#ai-coach .ai-coach-prompt.copied::after {
+  content:"\2713  copied"; opacity:1; color:#52d68a;
+}
+#ai-coach .ai-coach-footnote {
+  font-size:10px; color:#5a4870; margin:10px 0 0; padding-top:8px;
+  border-top:1px solid #2d1f46; font-style:italic;
+}
+#ai-coach .ai-coach-close {
+  position:absolute; top:10px; right:12px; background:transparent;
+  border:none; color:#5a4870; font-size:18px; cursor:pointer;
+  padding:0; line-height:1;
+}
+#ai-coach .ai-coach-close:hover { color:#e2d4f0; }
+@media (max-width:900px) {
+  #ai-coach { right:8px; }
+  #ai-coach .ai-coach-panel { width:calc(100vw - 16px); max-width:370px; }
+}
 </style>
 </head>
 <body>
@@ -558,6 +643,12 @@ html, body {
   <div class="nav-sec">Reference</div>
   <div class="nav-item" onclick="navTo('r16')"><div class="nav-dot" style="background:#79c0ff"></div><span class="nav-num">16</span>CLI Equivalents</div>
   <div class="nav-item" onclick="navTo('r17')"><div class="nav-dot" style="background:#34A853"></div><span class="nav-num">17</span>AI-Assisted Config</div>
+
+  <div class="nav-sec">Enterprise → Teams Migration</div>
+  <div class="nav-item" onclick="navTo('r18')"><div class="nav-dot" style="background:#79589f"></div><span class="nav-num">18</span>Enterprise vs. Teams</div>
+  <div class="nav-item" onclick="navTo('r19')"><div class="nav-dot" style="background:#c9a0ff"></div><span class="nav-num">19</span>Audit &amp; Preparation</div>
+  <div class="nav-item" onclick="navTo('r20')"><div class="nav-dot" style="background:#FBBC04"></div><span class="nav-num">20</span>App Migration &amp; Data</div>
+  <div class="nav-item" onclick="navTo('r21')"><div class="nav-dot" style="background:#c9b8e0"></div><span class="nav-num">21</span>Cutover &amp; Cleanup</div>
 
   <div class="nav-sec">Keyboard</div>
   <div class="nav-kbd">
@@ -2658,7 +2749,7 @@ app.listen(<span class="ev">process.env.PORT</span> || 8080);</pre>
 <!-- ════════════════════════════════════════════════════════════════════
      REGION 17 — AI-ASSISTED CONFIGURATION  (40,9520  4020×1020)
 ════════════════════════════════════════════════════════════════════════ -->
-<div id="r17" class="region r-forest" style="left:40px;top:9819px;width:4020px;height:1627px;">
+<div id="r17" class="region r-forest" style="left:40px;top:9819px;width:4020px;height:1692px;">
 <div class="rh">17 — AI-Assisted Configuration: How Claude Code Transforms the Migration</div>
 <div class="rb">
 
@@ -2923,6 +3014,685 @@ printf <span class="st">'%s'</span> <span class="st">""</span> &gt; <span class=
 </div>
 </div><!-- /r17 -->
 
+
+<!-- ════════════════════════════════════════════════════════════════════
+     REGION 18 — ENTERPRISE vs. TEAMS DECISION  (40,11546  4020×1280)
+════════════════════════════════════════════════════════════════════════ -->
+<div id="r18" class="region r-purple" style="left:40px;top:11546px;width:4020px;height:1020px;">
+<div class="rh">18 — Enterprise → Teams: Decision Framework</div>
+<div class="rb">
+
+  <div class="plat-grid" style="grid-template-columns:1fr 1fr 1fr;grid-template-rows:auto auto;gap:14px;">
+
+    <!-- SVG diagram — spans both rows on the left -->
+    <div class="card" style="grid-row:span 2;" data-search="enterprise teams migration flowchart diagram overview visual path decision">
+      <div class="ch ch-purple">🗺 Migration at a Glance: Two Paths to Teams &nbsp;<a href="https://devcenter.heroku.com/articles/transfer-heroku-teams-to-and-from-enterprise-accounts" target="_blank" rel="noopener" style="font-size:11px;color:#a78bfa;text-decoration:underline;font-weight:400;">devcenter.heroku.com ↗</a></div>
+      <div class="cb" style="padding:14px 14px 34px;display:flex;align-items:center;height:100%;">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 620" style="width:100%;height:100%;display:block;">
+          <defs>
+            <linearGradient id="gEnt" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#430098"/>
+              <stop offset="100%" stop-color="#6b3fa0"/>
+            </linearGradient>
+            <linearGradient id="gTeams" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#1a5c1a"/>
+              <stop offset="100%" stop-color="#34A853"/>
+            </linearGradient>
+            <linearGradient id="gPathA" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stop-color="#0a2e14"/>
+              <stop offset="100%" stop-color="#0d1f10"/>
+            </linearGradient>
+            <linearGradient id="gPathB" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stop-color="#2a1a08"/>
+              <stop offset="100%" stop-color="#1a1008"/>
+            </linearGradient>
+            <linearGradient id="gDecision" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#1a1040"/>
+              <stop offset="100%" stop-color="#2d1f4a"/>
+            </linearGradient>
+            <filter id="glow">
+              <feGaussianBlur stdDeviation="3" result="blur"/>
+              <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+            <marker id="arrowPurple" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+              <path d="M0,0 L8,3 L0,6" fill="none" stroke="#79589f" stroke-width="1.5"/>
+            </marker>
+            <marker id="arrowGreen" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+              <path d="M0,0 L8,3 L0,6" fill="none" stroke="#34A853" stroke-width="1.5"/>
+            </marker>
+          </defs>
+          <rect x="230" y="16" width="500" height="68" rx="12" fill="url(#gEnt)" stroke="#79589f" stroke-width="1.5"/>
+          <text x="480" y="42" text-anchor="middle" fill="#fff" font-size="15" font-weight="700" font-family="system-ui,sans-serif">HEROKU ENTERPRISE</text>
+          <text x="480" y="62" text-anchor="middle" fill="#c9b8e0" font-size="10.5" font-family="system-ui,sans-serif">Prepaid Annual · Private Spaces · Shield · SSO · Fine-Grained Permissions</text>
+          <line x1="480" y1="84" x2="480" y2="120" stroke="#79589f" stroke-width="2" marker-end="url(#arrowPurple)"/>
+          <polygon points="480,120 590,170 480,220 370,170" fill="url(#gDecision)" stroke="#79589f" stroke-width="1.5"/>
+          <text x="480" y="165" text-anchor="middle" fill="#e2d4f0" font-size="11" font-weight="600" font-family="system-ui,sans-serif">Use Private Spaces</text>
+          <text x="480" y="179" text-anchor="middle" fill="#e2d4f0" font-size="11" font-weight="600" font-family="system-ui,sans-serif">or Shield?</text>
+          <line x1="370" y1="170" x2="240" y2="170" stroke="#34A853" stroke-width="2"/>
+          <line x1="240" y1="170" x2="240" y2="260" stroke="#34A853" stroke-width="2" marker-end="url(#arrowGreen)"/>
+          <rect x="310" y="155" width="40" height="18" rx="9" fill="#0d2810" stroke="#34A853" stroke-width="1"/>
+          <text x="330" y="167" text-anchor="middle" fill="#34A853" font-size="10" font-weight="700" font-family="system-ui,sans-serif">NO</text>
+          <line x1="590" y1="170" x2="720" y2="170" stroke="#FBBC04" stroke-width="2"/>
+          <line x1="720" y1="170" x2="720" y2="260" stroke="#FBBC04" stroke-width="2"/>
+          <rect x="610" y="155" width="40" height="18" rx="9" fill="#2a1a08" stroke="#FBBC04" stroke-width="1"/>
+          <text x="630" y="167" text-anchor="middle" fill="#FBBC04" font-size="10" font-weight="700" font-family="system-ui,sans-serif">YES</text>
+          <rect x="80" y="260" width="320" height="240" rx="10" fill="url(#gPathA)" stroke="#34A853" stroke-width="1.5"/>
+          <rect x="80" y="260" width="320" height="32" rx="10" fill="rgba(52,168,83,0.15)"/>
+          <rect x="80" y="280" width="320" height="12" fill="url(#gPathA)"/>
+          <text x="240" y="281" text-anchor="middle" fill="#34A853" font-size="12" font-weight="700" font-family="system-ui,sans-serif">PATH A: In-Place Downgrade</text>
+          <text x="100" y="314" fill="#c9b8e0" font-size="10.5" font-family="system-ui,sans-serif">1. Contact Heroku Support / your AE</text>
+          <text x="100" y="334" fill="#c9b8e0" font-size="10.5" font-family="system-ui,sans-serif">2. Request tier conversion to Teams</text>
+          <text x="100" y="354" fill="#c9b8e0" font-size="10.5" font-family="system-ui,sans-serif">3. Confirm feature deactivation</text>
+          <text x="100" y="374" fill="#c9b8e0" font-size="10.5" font-family="system-ui,sans-serif">4. Billing switches to post-paid</text>
+          <text x="100" y="394" fill="#9b8ab0" font-size="10.5" font-family="system-ui,sans-serif">5. Done — apps stay in place</text>
+          <line x1="100" y1="412" x2="380" y2="412" stroke="#1a3a1a" stroke-width="1"/>
+          <text x="100" y="434" fill="#52d68a" font-size="10" font-weight="600" font-family="system-ui,sans-serif">⏱ 1–5 days · Zero downtime · Minimal risk</text>
+          <text x="100" y="452" fill="#9b8ab0" font-size="9.5" font-style="italic" font-family="system-ui,sans-serif">No data migration, no DNS changes, no code changes</text>
+          <rect x="295" y="470" width="85" height="20" rx="4" fill="rgba(52,168,83,0.18)" stroke="rgba(52,168,83,0.4)" stroke-width="1"/>
+          <text x="337" y="484" text-anchor="middle" fill="#34A853" font-size="9" font-weight="700" font-family="system-ui,sans-serif">RECOMMENDED</text>
+          <rect x="560" y="260" width="320" height="240" rx="10" fill="url(#gPathB)" stroke="#FBBC04" stroke-width="1.5"/>
+          <rect x="560" y="260" width="320" height="32" rx="10" fill="rgba(251,188,4,0.1)"/>
+          <rect x="560" y="280" width="320" height="12" fill="url(#gPathB)"/>
+          <text x="720" y="281" text-anchor="middle" fill="#FBBC04" font-size="12" font-weight="700" font-family="system-ui,sans-serif">PATH B: New Team + Fork/Clone</text>
+          <text x="580" y="314" fill="#c9b8e0" font-size="10.5" font-family="system-ui,sans-serif">1. Create new Teams account</text>
+          <text x="580" y="334" fill="#c9b8e0" font-size="10.5" font-family="system-ui,sans-serif">2. Refactor Enterprise-only deps</text>
+          <text x="580" y="354" fill="#c9b8e0" font-size="10.5" font-family="system-ui,sans-serif">3. Fork/recreate apps in Common Runtime</text>
+          <text x="580" y="374" fill="#c9b8e0" font-size="10.5" font-family="system-ui,sans-serif">4. Migrate databases &amp; Redis</text>
+          <text x="580" y="394" fill="#c9b8e0" font-size="10.5" font-family="system-ui,sans-serif">5. Rebuild pipelines, domains, CI</text>
+          <text x="580" y="414" fill="#9b8ab0" font-size="10.5" font-family="system-ui,sans-serif">6. DNS cutover &amp; decommission old</text>
+          <line x1="580" y1="432" x2="860" y2="432" stroke="#3a2810" stroke-width="1"/>
+          <text x="580" y="454" fill="#f0d060" font-size="10" font-weight="600" font-family="system-ui,sans-serif">⏱ 2–4 weeks · Minutes downtime · Moderate risk</text>
+          <text x="580" y="472" fill="#9b8ab0" font-size="9.5" font-style="italic" font-family="system-ui,sans-serif">Full migration — data, DNS, and code changes required</text>
+          <rect x="790" y="290" width="84" height="20" rx="4" fill="rgba(251,188,4,0.15)" stroke="rgba(251,188,4,0.35)" stroke-width="1"/>
+          <text x="832" y="304" text-anchor="middle" fill="#FBBC04" font-size="9" font-weight="700" font-family="system-ui,sans-serif">IF REQUIRED</text>
+          <line x1="240" y1="500" x2="240" y2="540" stroke="#34A853" stroke-width="2"/>
+          <line x1="720" y1="500" x2="720" y2="540" stroke="#FBBC04" stroke-width="2"/>
+          <line x1="240" y1="540" x2="480" y2="540" stroke="#34A853" stroke-width="2"/>
+          <line x1="720" y1="540" x2="480" y2="540" stroke="#FBBC04" stroke-width="2"/>
+          <line x1="480" y1="540" x2="480" y2="558" stroke="#79589f" stroke-width="2" marker-end="url(#arrowPurple)"/>
+          <rect x="230" y="562" width="500" height="52" rx="12" fill="url(#gTeams)" stroke="#34A853" stroke-width="1.5" filter="url(#glow)"/>
+          <text x="480" y="585" text-anchor="middle" fill="#fff" font-size="15" font-weight="700" font-family="system-ui,sans-serif">HEROKU TEAMS</text>
+          <text x="480" y="603" text-anchor="middle" fill="#d4f0d4" font-size="10.5" font-family="system-ui,sans-serif">Post-Paid Monthly · Common Runtime · No Platform Fee · Same Developer Experience</text>
+        </svg>
+      </div>
+    </div>
+
+    <!-- Quick Qualifier (top-right left) -->
+    <div class="card" data-search="enterprise teams qualify decision simple switch billing">
+      <div class="ch ch-purple">🎯 Quick Qualifier: Can You Switch?</div>
+      <div class="cb">
+        <div class="mb-8" style="font-size:12.1px;font-weight:700;color:#34A853;text-transform:uppercase;letter-spacing:.08em;">✓ Good candidate if…</div>
+        <div class="pro mb-6 text-sm">No apps in Private Spaces (all Common Runtime)</div>
+        <div class="pro mb-6 text-sm">No Heroku Shield (no SOC2/HIPAA/PCI through Heroku)</div>
+        <div class="pro mb-6 text-sm">SSO/SAML is not required (can use native Heroku auth + MFA)</div>
+        <div class="pro mb-6 text-sm">No Heroku Connect mappings (or can replace with APIs)</div>
+        <div class="pro mb-6 text-sm">Fine-grained permissions not critical (admin/member/viewer is enough)</div>
+        <hr class="divider">
+        <div class="mb-8" style="font-size:12.1px;font-weight:700;color:#EA4335;text-transform:uppercase;letter-spacing:.08em;">✗ Cannot switch if…</div>
+        <div class="con mb-6 text-sm">Active compliance obligation requires Shield Postgres/Redis</div>
+        <div class="con mb-6 text-sm">Apps rely on internal routing (.local URLs) in Private Spaces</div>
+        <div class="con mb-6 text-sm">VPC peering or Trusted IP Ranges are enforced by security policy</div>
+        <div class="con mb-6 text-sm">Identity Federation (SAML SSO) is mandated by corporate IT</div>
+        <div class="tip-box mt-8">
+          <strong>Simple path:</strong> If all checkmarks pass above, your migration may be as simple as a support ticket + <code class="mono">heroku apps:transfer</code> commands.
+        </div>
+      </div>
+    </div>
+
+    <!-- Billing Comparison (top-right right) -->
+    <div class="card" data-search="enterprise teams billing cost pricing prepaid postpaid monthly annual">
+      <div class="ch ch-amber">💰 Billing Model Comparison</div>
+      <div class="cb">
+        <table class="tbl">
+          <tr><th>Dimension</th><th class="th">Enterprise</th><th class="tg">Teams</th></tr>
+          <tr><td class="cf">Payment model</td><td class="th">Prepaid annual contract</td><td class="tg">Post-paid monthly (credit card)</td></tr>
+          <tr><td class="cf">Platform fee</td><td class="th score-lo">~$1,000+/mo base</td><td class="tg score-hi">$0 — pay per resource only</td></tr>
+          <tr><td class="cf">Private Spaces</td><td class="th">$1,000+/mo per space</td><td class="tg">N/A (Common Runtime only)</td></tr>
+          <tr><td class="cf">Dyno pricing</td><td class="th">Same as list</td><td class="tg">Same as list — no change</td></tr>
+          <tr><td class="cf">Add-on pricing</td><td class="th">Same as list</td><td class="tg">Same as list — no change</td></tr>
+          <tr><td class="cf">Heroku CI</td><td class="th">Included</td><td class="tg">$10/mo per pipeline</td></tr>
+          <tr><td class="cf">Commitment</td><td class="th">Annual (early termination fees)</td><td class="tg">None — cancel anytime</td></tr>
+          <tr><td class="cf">Support</td><td class="th">Premier / dedicated CSM</td><td class="tg">Standard ticket-based</td></tr>
+        </table>
+        <div class="info-box mt-8">
+          <strong>Break-even rule:</strong> If your actual resource usage is less than your annual contract divided by 12, Teams costs less. The platform fee alone ($12K+/year) is pure savings on Teams.
+        </div>
+      </div>
+    </div>
+
+    <!-- Feature Comparison (bottom-right left) -->
+    <div class="card" data-search="enterprise teams features comparison keep lose private spaces shield sso">
+      <div class="ch ch-purple">📋 Feature Comparison: What You Keep &amp; Lose</div>
+      <div class="cb">
+        <div class="text-xs" style="color:#34A853;font-weight:700;text-transform:uppercase;margin-bottom:6px;">What you keep on Teams</div>
+        <ul style="list-style:none;font-size:13.2px;color:#c9b8e0;">
+          <li class="mb-5">✓ Pipelines with Review Apps and CI ($10/mo extra)</li>
+          <li class="mb-5">✓ Team-level access control (admin, member, viewer)</li>
+          <li class="mb-5">✓ Automated Certificate Management (ACM/SSL)</li>
+          <li class="mb-5">✓ All dyno types (Eco through Performance-L)</li>
+          <li class="mb-5">✓ All standard add-ons (Postgres, Redis, etc.)</li>
+          <li class="mb-5">✓ GitHub/GitLab integration and auto-deploy</li>
+          <li class="mb-5">✓ Log drains, custom domains, heroku CLI</li>
+        </ul>
+        <hr class="divider">
+        <div class="text-xs" style="color:#EA4335;font-weight:700;text-transform:uppercase;margin-bottom:6px;">What you lose on Teams</div>
+        <ul style="list-style:none;font-size:13.2px;color:#f08080;">
+          <li class="mb-5">✗ Private Spaces (dedicated runtime + internal routing)</li>
+          <li class="mb-5">✗ Heroku Shield (compliance-grade infrastructure)</li>
+          <li class="mb-5">✗ SSO / SAML Identity Federation</li>
+          <li class="mb-5">✗ Trusted IP Ranges (network-level access control)</li>
+          <li class="mb-5">✗ VPC Peering (private database connectivity to AWS)</li>
+          <li class="mb-5">✗ Internal Routing (.local URLs between apps)</li>
+          <li class="mb-5">✗ Fine-grained permissions (deploy role, lock, etc.)</li>
+          <li class="mb-5">✗ Premier support / dedicated CSM</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Contract Timing (bottom-right right) -->
+    <div class="card" data-search="enterprise teams contract timing renewal planning switch">
+      <div class="ch ch-purple">📅 Contract &amp; Timing Considerations</div>
+      <div class="cb">
+        <ol class="steps">
+          <li class="step-item"><div class="step-num">1</div><div class="step-text"><strong>Check your renewal date:</strong> Enterprise contracts typically have early termination fees. Plan the switch to coincide with your annual renewal window.</div></li>
+          <li class="step-item"><div class="step-num">2</div><div class="step-text"><strong>Engage your Heroku AE early:</strong> Notify your Account Executive 60–90 days before renewal. They may offer retention pricing, or facilitate the in-place downgrade.</div></li>
+          <li class="step-item"><div class="step-num">3</div><div class="step-text"><strong>Export before you lose access:</strong> Some Enterprise features (SSO user lists, Shield audit logs, space-level metrics) become inaccessible after downgrade. Archive what you need.</div></li>
+          <li class="step-item"><div class="step-num">4</div><div class="step-text"><strong>Allow 2–4 week buffer:</strong> Even a "simple" tier switch needs time for testing, DNS verification, and team coordination. Don't cut it down to the wire.</div></li>
+        </ol>
+        <div class="warn-box mt-8">
+          <strong>In-place vs. fresh Team:</strong> Heroku support can sometimes convert your Enterprise account to Teams without recreating apps. Always ask — it's the lowest-risk path if available.
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+</div><!-- /r18 -->
+
+
+<!-- ════════════════════════════════════════════════════════════════════
+     REGION 19 — AUDIT & PREPARATION  (40,12926  4020×1480)
+════════════════════════════════════════════════════════════════════════ -->
+<div id="r19" class="region r-violet" style="left:40px;top:12666px;width:1980px;height:1990px;">
+<div class="rh">19 — Audit &amp; Preparation: Inventory, Blockers, and Refactoring</div>
+<div class="rb">
+
+  <div class="plat-grid" style="grid-template-columns:repeat(2,1fr);gap:14px;margin-bottom:14px;">
+
+    <!-- Card: App Inventory -->
+    <div class="card" data-search="heroku enterprise inventory apps addons config audit list">
+      <div class="ch ch-step">Step 1 — Inventory All Enterprise Apps</div>
+      <div class="cb">
+        <pre class="code-block"><span class="cm"># List all apps in your Enterprise team</span>
+<span class="kh">heroku</span> apps <span class="fl">--team</span> <span class="vl">&lt;enterprise-team-name&gt;</span>
+
+<span class="cm"># For each app, capture full state:</span>
+<span class="kh">heroku</span> apps:info <span class="fl">-a</span> <span class="vl">&lt;app-name&gt;</span>
+<span class="kh">heroku</span> config <span class="fl">-a</span> <span class="vl">&lt;app-name&gt;</span> <span class="fl">--shell</span> &gt; <span class="st">&lt;app-name&gt;.env</span>
+<span class="kh">heroku</span> addons <span class="fl">-a</span> <span class="vl">&lt;app-name&gt;</span>
+<span class="kh">heroku</span> ps <span class="fl">-a</span> <span class="vl">&lt;app-name&gt;</span>
+<span class="kh">heroku</span> domains <span class="fl">-a</span> <span class="vl">&lt;app-name&gt;</span>
+
+<span class="cm"># Bulk inventory script (all apps at once)</span>
+<span class="kh">heroku</span> apps <span class="fl">--team</span> <span class="vl">&lt;team&gt;</span> <span class="fl">--json</span> | \
+  jq -r <span class="st">'.[].name'</span> | <span class="br">while</span> read app; <span class="br">do</span>
+    <span class="br">echo</span> <span class="st">"=== $app ==="</span>
+    <span class="kh">heroku</span> addons <span class="fl">-a</span> <span class="st">"$app"</span> <span class="fl">--json</span>
+    <span class="kh">heroku</span> ps <span class="fl">-a</span> <span class="st">"$app"</span> <span class="fl">--json</span>
+  <span class="br">done</span> &gt; <span class="st">full-inventory.json</span></pre>
+        <div class="tip-box mt-8">
+          <strong>Key fields to note:</strong> Check <code class="mono">space</code> (null = Common Runtime, good), <code class="mono">internal_routing</code> (should be false), and any add-ons with "shield" or "private" in the plan name.
+        </div>
+      </div>
+    </div>
+
+    <!-- Card: Identify Blockers -->
+    <div class="card" data-search="heroku enterprise blocker private space shield connect sso check">
+      <div class="ch ch-red">Step 2 — Identify Blockers</div>
+      <div class="cb">
+        <div class="text-sm text-muted mb-8">Flag any app that uses Enterprise-only features:</div>
+        <table class="tbl">
+          <tr><th>Blocker</th><th>How to Detect</th><th>Severity</th></tr>
+          <tr><td class="cf">Private Spaces</td><td><code class="mono">heroku spaces</code> — any apps listed here</td><td><span class="badge b-complex">Hard</span></td></tr>
+          <tr><td class="cf">Shield Postgres/Redis</td><td><code class="mono">heroku addons</code> — plan contains "shield"</td><td><span class="badge b-complex">Hard</span></td></tr>
+          <tr><td class="cf">Heroku Connect</td><td><code class="mono">heroku addons</code> — type is "herokuconnect"</td><td><span class="badge b-moderate">Medium</span></td></tr>
+          <tr><td class="cf">Internal Routing</td><td><code class="mono">heroku features -a &lt;app&gt;</code> — check http-sni</td><td><span class="badge b-complex">Hard</span></td></tr>
+          <tr><td class="cf">SSO / SAML</td><td>Dashboard → Team Settings → Identity Provider</td><td><span class="badge b-moderate">Medium</span></td></tr>
+          <tr><td class="cf">Trusted IPs</td><td><code class="mono">heroku trusted-ips -s &lt;space&gt;</code></td><td><span class="badge b-moderate">Medium</span></td></tr>
+        </table>
+        <div class="warn-box mt-8">
+          <strong>Hard blockers</strong> require architectural changes (see refactoring cards below). <strong>Medium blockers</strong> require workarounds but don't prevent migration.
+        </div>
+      </div>
+    </div>
+
+    <!-- Card: Decision Paths -->
+    <div class="card" style="grid-column:span 2;" data-search="enterprise teams migration path simple complex decision private space support downgrade">
+      <div class="ch ch-purple">🔀 Two Distinct Migration Methods</div>
+      <div class="cb">
+        <div class="mb-10" style="font-size:12.1px;font-weight:700;color:#34A853;text-transform:uppercase;letter-spacing:.08em;">Path A: In-Place Downgrade (Heroku Support)</div>
+        <div class="text-sm text-muted mb-6">Heroku support converts your existing Enterprise team to a Teams subscription. Apps, add-ons, and domains stay exactly where they are.</div>
+        <ol class="steps">
+          <li class="step-item"><div class="step-num">1</div><div class="step-text"><strong>Contact Heroku support</strong> (or your AE) and request an in-place tier downgrade from Enterprise to Teams</div></li>
+          <li class="step-item"><div class="step-num">2</div><div class="step-text"><strong>Confirm feature removal:</strong> Support will outline which Enterprise features will be deactivated (Private Spaces, Shield, SSO)</div></li>
+          <li class="step-item"><div class="step-num">3</div><div class="step-text"><strong>Billing switches:</strong> Your contract transitions to post-paid monthly. Attach a credit card to the team.</div></li>
+          <li class="step-item"><div class="step-num">4</div><div class="step-text"><strong>Done:</strong> Apps continue running. No data migration, no DNS changes, no downtime.</div></li>
+        </ol>
+        <div class="tip-box mt-6 mb-10">
+          <strong>Best for:</strong> Teams with no Private Spaces, no Shield, no SSO dependency. Timeline: 1–5 business days. Risk: minimal.
+        </div>
+        <hr class="divider">
+        <div class="mb-10" style="font-size:12.1px;font-weight:700;color:#FBBC04;text-transform:uppercase;letter-spacing:.08em;">Path B: New Team + Fork/Clone (Self-Service)</div>
+        <div class="text-sm text-muted mb-6">Create a fresh Teams account and migrate apps via CLI. Required if you have apps in Private Spaces (they cannot be transferred out) or if Heroku support cannot do an in-place conversion.</div>
+        <ol class="steps">
+          <li class="step-item"><div class="step-num">1</div><div class="step-text"><strong>Create new Teams account:</strong> <code>heroku teams:create &lt;name&gt;</code></div></li>
+          <li class="step-item"><div class="step-num">2</div><div class="step-text"><strong>Refactor Enterprise-only deps:</strong> Replace internal routing, Trusted IPs, Heroku Connect (see cards below)</div></li>
+          <li class="step-item"><div class="step-num">3</div><div class="step-text"><strong>Transfer or fork apps:</strong> Common Runtime apps can <code>heroku apps:transfer</code>; Private Space apps must be recreated (see Region 20)</div></li>
+          <li class="step-item"><div class="step-num">4</div><div class="step-text"><strong>Migrate data:</strong> <code>pg:backups:capture</code> + <code>pg:backups:restore</code>, rebuild Redis, re-create scheduler jobs</div></li>
+          <li class="step-item"><div class="step-num">5</div><div class="step-text"><strong>Rebuild pipelines &amp; domains:</strong> Create pipelines, move custom domains, re-authorize GitHub</div></li>
+          <li class="step-item"><div class="step-num">6</div><div class="step-text"><strong>DNS cutover &amp; cleanup:</strong> Switch DNS, verify, then decommission old resources (see Region 21)</div></li>
+        </ol>
+        <div class="warn-box mt-6">
+          <strong>Best for:</strong> Teams with Private Spaces or complex setups. Timeline: 2–4 weeks. Risk: moderate (plan carefully). The remaining cards in Regions 19–21 walk through Path B in detail.
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="plat-grid" style="grid-template-columns:repeat(2,1fr);gap:14px;">
+
+    <!-- Card: Replace Internal Routing -->
+    <div class="card" data-search="heroku internal routing replace public https tls authentication">
+      <div class="ch ch-step">Refactor: Replace Internal Routing</div>
+      <div class="cb">
+        <div class="text-sm text-muted mb-8">Apps communicating via <code class="mono">.local</code> URLs inside a Private Space need public-facing endpoints:</div>
+        <ol class="steps">
+          <li class="step-item"><div class="step-num">1</div><div class="step-text"><strong>Expose on public URLs:</strong> Each service gets its own <code>*.herokuapp.com</code> URL (or custom domain with ACM)</div></li>
+          <li class="step-item"><div class="step-num">2</div><div class="step-text"><strong>Add authentication:</strong> API keys, JWT bearer tokens, or mutual TLS between services</div></li>
+          <li class="step-item"><div class="step-num">3</div><div class="step-text"><strong>Update config vars:</strong> Replace all <code>.local</code> references with new public HTTPS URLs</div></li>
+        </ol>
+        <pre class="code-block"><span class="cm"># Before (Private Space internal routing)</span>
+<span class="ev">PAYMENT_SERVICE_URL</span>=<span class="st">http://payment-api.local:5000</span>
+
+<span class="cm"># After (Common Runtime with auth)</span>
+<span class="ev">PAYMENT_SERVICE_URL</span>=<span class="st">https://payment-api-prod.herokuapp.com</span>
+<span class="ev">PAYMENT_SERVICE_KEY</span>=<span class="st">sk_live_xxxxxxxxxxxxx</span></pre>
+      </div>
+    </div>
+
+    <!-- Card: Replace Heroku Connect -->
+    <div class="card" data-search="heroku connect replace salesforce api rest bulk cdc mulesoft">
+      <div class="ch ch-step">Refactor: Replace Heroku Connect</div>
+      <div class="cb">
+        <div class="text-sm text-muted mb-8">Heroku Connect is Enterprise-only. Replacement options:</div>
+        <table class="tbl">
+          <tr><th>Option</th><th>Best For</th><th>Effort</th></tr>
+          <tr><td class="cf">Salesforce REST API</td><td>Low-volume, simple CRUD sync</td><td><span class="badge b-simple">Low</span></td></tr>
+          <tr><td class="cf">Salesforce Bulk API 2.0</td><td>High-volume batch sync (1000+ records)</td><td><span class="badge b-moderate">Medium</span></td></tr>
+          <tr><td class="cf">Change Data Capture (CDC)</td><td>Real-time events (Salesforce → app)</td><td><span class="badge b-moderate">Medium</span></td></tr>
+          <tr><td class="cf">MuleSoft / integration platform</td><td>Complex bidirectional mapping</td><td><span class="badge b-complex">High</span></td></tr>
+        </table>
+        <pre class="code-block"><span class="cm"># Example: background worker syncing via REST API</span>
+<span class="cm"># Replace Heroku Connect's automatic sync with:</span>
+<span class="cm"># 1. Scheduled job polls Salesforce for changes</span>
+<span class="cm"># 2. Upserts to local Postgres via your ORM</span>
+<span class="cm"># 3. Writes back via SF API on local DB changes</span>
+
+<span class="cm"># Use jsforce (Node.js) or simple-salesforce (Python)</span>
+<span class="br">npm install</span> jsforce   <span class="cm"># Salesforce API client</span></pre>
+      </div>
+    </div>
+
+    <!-- Card: Replace Trusted IPs / SSO -->
+    <div class="card" style="grid-column:span 2;" data-search="heroku trusted ip replace sso saml mfa workaround middleware waf">
+      <div class="ch ch-step">Refactor: IP Restrictions &amp; SSO Workarounds</div>
+      <div class="cb">
+        <div class="text-xs" style="color:#FBBC04;font-weight:700;text-transform:uppercase;margin-bottom:6px;">Replacing Trusted IP Ranges</div>
+        <ul style="list-style:none;font-size:13.2px;color:#c9b8e0;">
+          <li class="mb-5">✓ App-level IP allowlisting middleware (Express, Flask, Rails)</li>
+          <li class="mb-5">✓ Reverse proxy / WAF (Cloudflare, Fastly, AWS CloudFront)</li>
+          <li class="mb-5">✓ VPN gateway in front of app (e.g., Tailscale, Cloudflare Access)</li>
+        </ul>
+        <hr class="divider">
+        <div class="text-xs" style="color:#FBBC04;font-weight:700;text-transform:uppercase;margin-bottom:6px;">Replacing SSO / Identity Federation</div>
+        <ul style="list-style:none;font-size:13.2px;color:#c9b8e0;">
+          <li class="mb-5">✓ Heroku native auth with mandatory MFA for all team members</li>
+          <li class="mb-5">✓ Manage access via <code class="mono">heroku members:add/remove</code></li>
+          <li class="mb-5">✓ Use GitHub team-based access if using GitHub deploys</li>
+        </ul>
+        <div class="warn-box mt-8">
+          <strong>Security note:</strong> If your organization mandates SAML SSO for all SaaS tools, the Teams tier may not meet policy. Confirm with your security team before proceeding.
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+</div><!-- /r19 -->
+
+
+<!-- ════════════════════════════════════════════════════════════════════
+     REGION 20 — APP MIGRATION & DATA  (40,14506  4020×1520)
+════════════════════════════════════════════════════════════════════════ -->
+<div id="r20" class="region r-amber" style="left:2080px;top:12666px;width:1980px;height:1990px;">
+<div class="rh">20 — App Migration &amp; Data: Transfer, Fork, and Rebuild</div>
+<div class="rb">
+
+  <div class="plat-grid" style="grid-template-columns:repeat(2,1fr);gap:14px;margin-bottom:14px;">
+
+    <!-- Card: Option A Transfer -->
+    <div class="card" data-search="heroku apps transfer team common runtime simple move">
+      <div class="ch ch-green">Option A — Direct Transfer <span class="badge b-simple" style="margin-left:auto;">Simple</span></div>
+      <div class="cb">
+        <div class="text-sm text-muted mb-8">Works for apps already in Common Runtime (not in a Private Space):</div>
+        <pre class="code-block"><span class="cm"># Transfer app ownership to the new Teams account</span>
+<span class="kh">heroku</span> apps:transfer <span class="vl">&lt;new-team-name&gt;</span> <span class="fl">-a</span> <span class="vl">&lt;app-name&gt;</span>
+
+<span class="cm"># Verify the transfer</span>
+<span class="kh">heroku</span> apps:info <span class="fl">-a</span> <span class="vl">&lt;app-name&gt;</span>
+<span class="cm"># owner should now show: &lt;new-team-name&gt;</span>
+
+<span class="cm"># Repeat for all apps</span>
+<span class="br">for</span> app <span class="br">in</span> app1 app2 app3; <span class="br">do</span>
+  <span class="kh">heroku</span> apps:transfer <span class="vl">&lt;new-team&gt;</span> <span class="fl">-a</span> <span class="st">"$app"</span>
+  <span class="ok">echo "✓ Transferred $app"</span>
+<span class="br">done</span></pre>
+        <div class="tip-box mt-8">
+          <strong>What transfers with the app:</strong> All config vars, add-ons, custom domains, SSL certs, collaborators, and git repo. The app stays running with zero downtime during transfer.
+        </div>
+      </div>
+    </div>
+
+    <!-- Card: Option B Fork -->
+    <div class="card" data-search="heroku apps fork recreate private space common runtime rebuild">
+      <div class="ch ch-amber">Option B — Fork &amp; Recreate <span class="badge b-moderate" style="margin-left:auto;">Moderate</span></div>
+      <div class="cb">
+        <div class="text-sm text-muted mb-8">Required for apps currently in Private Spaces (cannot be transferred out):</div>
+        <pre class="code-block"><span class="cm"># Create new app in Teams (Common Runtime)</span>
+<span class="kh">heroku</span> apps:create <span class="vl">&lt;app-name&gt;-new</span> <span class="fl">--team</span> <span class="vl">&lt;new-team&gt;</span> <span class="fl">--region</span> us
+
+<span class="cm"># Set buildpacks</span>
+<span class="kh">heroku</span> buildpacks:set <span class="vl">heroku/nodejs</span> <span class="fl">-a</span> <span class="vl">&lt;app-name&gt;-new</span>
+
+<span class="cm"># Copy config vars from old → new</span>
+<span class="kh">heroku</span> config <span class="fl">-a</span> <span class="vl">&lt;app-name&gt;</span> <span class="fl">--shell</span> | \
+  <span class="kh">heroku</span> config:set <span class="fl">-a</span> <span class="vl">&lt;app-name&gt;-new</span>
+
+<span class="cm"># Provision equivalent add-ons</span>
+<span class="kh">heroku</span> addons:create <span class="vl">heroku-postgresql:essential-0</span> <span class="fl">-a</span> <span class="vl">&lt;app-name&gt;-new</span>
+<span class="kh">heroku</span> addons:create <span class="vl">heroku-redis:mini</span> <span class="fl">-a</span> <span class="vl">&lt;app-name&gt;-new</span>
+
+<span class="cm"># Deploy code</span>
+<span class="kh">heroku</span> git:remote <span class="fl">-a</span> <span class="vl">&lt;app-name&gt;-new</span> <span class="fl">-r</span> new-team
+<span class="br">git push</span> new-team main</pre>
+        <div class="warn-box mt-8">
+          <strong>App names are globally unique:</strong> You can't reuse the old name until the old app is destroyed. Use <code class="mono">heroku apps:rename</code> on the old app first if you need the same name.
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="plat-grid" style="grid-template-columns:repeat(2,1fr);gap:14px;margin-bottom:14px;">
+
+    <!-- Card: Postgres Migration -->
+    <div class="card" data-search="heroku postgres database backup restore migrate transfer teams">
+      <div class="ch ch-green">🗄 Database Migration (Postgres)</div>
+      <div class="cb">
+        <pre class="code-block"><span class="cm"># Capture backup from source app</span>
+<span class="kh">heroku</span> pg:backups:capture <span class="fl">-a</span> <span class="vl">&lt;app-name&gt;</span>
+
+<span class="cm"># Get the signed backup URL</span>
+<span class="kh">heroku</span> pg:backups:url <span class="fl">-a</span> <span class="vl">&lt;app-name&gt;</span>
+
+<span class="cm"># Restore into new app's database</span>
+<span class="kh">heroku</span> pg:backups:restore <span class="st">'&lt;backup-url&gt;'</span> \
+  DATABASE_URL <span class="fl">-a</span> <span class="vl">&lt;app-name&gt;-new</span> <span class="fl">--confirm</span> <span class="vl">&lt;app-name&gt;-new</span>
+
+<span class="cm"># Verify row counts match</span>
+<span class="kh">heroku</span> pg:psql <span class="fl">-a</span> <span class="vl">&lt;app-name&gt;-new</span> <span class="fl">-c</span> \
+  <span class="st">"SELECT schemaname, relname, n_live_tup FROM pg_stat_user_tables ORDER BY n_live_tup DESC;"</span></pre>
+        <div class="info-box mt-8">
+          <strong>Downgrade plan if needed:</strong> If migrating from Shield Postgres, provision a standard-tier plan on the new app. Data format is identical — only the compliance wrapper changes.
+        </div>
+      </div>
+    </div>
+
+    <!-- Card: Redis -->
+    <div class="card" data-search="heroku redis migrate cache transfer teams rebuild seed">
+      <div class="ch ch-amber">🔴 Redis Migration</div>
+      <div class="cb">
+        <div class="text-sm text-muted mb-8">Redis on Heroku doesn't support cross-account backup/restore. Options:</div>
+        <ul style="list-style:none;font-size:13.2px;color:#c9b8e0;">
+          <li class="mb-6">✓ <strong>If cache-only:</strong> Provision fresh Redis on new app. App rebuilds cache on first request.</li>
+          <li class="mb-6">✓ <strong>If persistent data:</strong> Write a migration script using <code class="mono">DUMP</code>/<code class="mono">RESTORE</code> commands per key.</li>
+          <li class="mb-6">✓ <strong>If queue (Sidekiq/Bull):</strong> Drain jobs on old app, then switch to new Redis URL.</li>
+        </ul>
+        <pre class="code-block"><span class="cm"># Provision Redis on new app</span>
+<span class="kh">heroku</span> addons:create <span class="vl">heroku-redis:mini</span> <span class="fl">-a</span> <span class="vl">&lt;app-name&gt;-new</span>
+
+<span class="cm"># For queues: drain before cutover</span>
+<span class="cm"># Wait until queue length = 0, then switch</span>
+<span class="kh">heroku</span> redis:info <span class="fl">-a</span> <span class="vl">&lt;app-name&gt;</span></pre>
+      </div>
+    </div>
+
+    <!-- Card: Pipelines & CI -->
+    <div class="card" data-search="heroku pipeline review apps ci migrate teams">
+      <div class="ch ch-step">Pipelines &amp; CI</div>
+      <div class="cb">
+        <pre class="code-block"><span class="cm"># Create pipeline in new Teams context</span>
+<span class="kh">heroku</span> pipelines:create <span class="vl">&lt;pipeline-name&gt;</span> \
+  <span class="fl">--team</span> <span class="vl">&lt;new-team&gt;</span> <span class="fl">--stage</span> production
+
+<span class="cm"># Add apps to stages</span>
+<span class="kh">heroku</span> pipelines:add <span class="vl">&lt;pipeline&gt;</span> <span class="fl">-a</span> <span class="vl">&lt;app&gt;-staging</span> <span class="fl">--stage</span> staging
+<span class="kh">heroku</span> pipelines:add <span class="vl">&lt;pipeline&gt;</span> <span class="fl">-a</span> <span class="vl">&lt;app&gt;-new</span> <span class="fl">--stage</span> production
+
+<span class="cm"># Re-enable Review Apps from Pipeline Dashboard
+# Re-enable CI ($10/mo per pipeline on Teams)</span></pre>
+        <div class="warn-box mt-8">
+          <strong>GitHub integration:</strong> Must be re-authorized per team. Go to Dashboard → Team Settings → connect GitHub.
+        </div>
+      </div>
+    </div>
+
+    <!-- Card: TLS, Domains & Certificate Management -->
+    <div class="card" data-search="heroku tls ssl certificate domain acm dns cname transfer custom cert renewal">
+      <div class="ch ch-violet">🔒 TLS, Domains &amp; Certificate Management</div>
+      <div class="cb">
+        <div class="text-xs" style="color:#34A853;font-weight:700;text-transform:uppercase;margin-bottom:6px;">Path A (transfer) — what happens automatically</div>
+        <ul style="list-style:none;font-size:13.2px;color:#c9b8e0;">
+          <li class="mb-5">✓ Custom domains stay attached — no DNS change needed</li>
+          <li class="mb-5">✓ ACM certificates remain valid and continue auto-renewing</li>
+          <li class="mb-5">✓ DNS CNAME targets do not change (same <code class="mono">.herokudns.com</code> endpoint)</li>
+          <li class="mb-5">✓ SNI routing continues uninterrupted</li>
+        </ul>
+        <hr class="divider">
+        <div class="text-xs" style="color:#FBBC04;font-weight:700;text-transform:uppercase;margin-bottom:6px;">Path B (fork/recreate) — manual steps required</div>
+        <pre class="code-block"><span class="cm"># Add custom domain to new app</span>
+<span class="kh">heroku</span> domains:add <span class="vl">api.example.com</span> <span class="fl">-a</span> <span class="vl">&lt;app-name&gt;-new</span>
+
+<span class="cm"># Get the NEW DNS target (different from old app!)</span>
+<span class="kh">heroku</span> domains <span class="fl">-a</span> <span class="vl">&lt;app-name&gt;-new</span>
+<span class="cm"># → api.example.com  CNAME  &lt;new-target&gt;.herokudns.com</span>
+
+<span class="cm"># Update CNAME at your DNS provider to new target
+# ACM will auto-provision a new cert once DNS propagates
+# (takes 5–45 min depending on provider TTL)</span>
+
+<span class="cm"># Verify certificate status</span>
+<span class="kh">heroku</span> certs:auto <span class="fl">-a</span> <span class="vl">&lt;app-name&gt;-new</span>
+<span class="cm"># Status should show: Cert issued, OK</span>
+
+<span class="cm"># Remove domain from old app (only after new cert is active!)</span>
+<span class="kh">heroku</span> domains:remove <span class="vl">api.example.com</span> <span class="fl">-a</span> <span class="vl">&lt;app-name&gt;</span></pre>
+        <div class="warn-box mt-8">
+          <strong>Cert gap risk (Path B):</strong> There is a brief window where the new app's ACM cert is pending while DNS propagates. To avoid TLS errors during this window: <strong>lower DNS TTL to 60s 48h before cutover</strong>, and do not remove the domain from the old app until <code class="mono">heroku certs:auto</code> confirms the new cert is active.
+        </div>
+        <div class="info-box mt-8">
+          <strong>Custom certs (non-ACM):</strong> If you use manually uploaded certs (e.g., wildcard or EV certs), you must re-upload them to the new app via <code class="mono">heroku certs:add server.crt server.key -a &lt;app-name&gt;-new</code>. These do <em>not</em> transfer automatically in Path B.
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="card" data-search="heroku enterprise teams migration gotchas pitfalls checklist common issues">
+    <div class="ch ch-red">⚠️ Common Gotchas</div>
+    <div class="cb">
+      <div class="plat-grid" style="grid-template-columns:repeat(2,1fr);gap:14px;">
+        <div>
+          <ul style="list-style:none;font-size:13.2px;color:#c9b8e0;">
+            <li class="mb-6">⚠️ <strong>App names globally unique</strong> — rename old app first if you want the same name on new team</li>
+            <li class="mb-6">⚠️ <strong>Add-on attachments</strong> — some third-party add-ons are account-tied; provision new ones</li>
+            <li class="mb-6">⚠️ <strong>Scheduler jobs</strong> — not transferred; recreate via <code class="mono">heroku addons:open scheduler</code></li>
+            <li class="mb-6">⚠️ <strong>Log drain tokens</strong> — unique per app; re-add drains on new app</li>
+          </ul>
+        </div>
+        <div>
+          <ul style="list-style:none;font-size:13.2px;color:#c9b8e0;">
+            <li class="mb-6">⚠️ <strong>Config var diff</strong> — always compare old vs. new to catch missed secrets</li>
+            <li class="mb-6">⚠️ <strong>Webhook URLs</strong> — update any external services calling your old app URL</li>
+            <li class="mb-6">⚠️ <strong>OAuth callback URLs</strong> — update in all identity providers (Google, GitHub, etc.)</li>
+            <li class="mb-6">⚠️ <strong>Team roles simplified</strong> — only admin/member/viewer; no per-app deploy lock</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</div><!-- /r20 -->
+
+
+<!-- ════════════════════════════════════════════════════════════════════
+     REGION 21 — CUTOVER & CLEANUP  (40,16126  4020×1180)
+════════════════════════════════════════════════════════════════════════ -->
+<div id="r21" class="region r-iris" style="left:40px;top:14726px;width:4020px;height:1080px;">
+<div class="rh">21 — Cutover &amp; Cleanup: Go Live on Teams</div>
+<div class="rb">
+
+  <div class="plat-grid" style="grid-template-columns:repeat(2,1fr);gap:14px;margin-bottom:14px;">
+
+    <!-- Card: DNS Cutover -->
+    <div class="card" data-search="heroku teams dns cutover zero downtime domain transfer maintenance">
+      <div class="ch ch-violet">🔄 DNS Cutover Plan</div>
+      <div class="cb">
+        <ol class="steps">
+          <li class="step-item"><div class="step-num">1</div><div class="step-text"><strong>Lower DNS TTL (48h before):</strong> Set TTL to 60 seconds at your DNS provider for fast propagation during the switch.</div></li>
+          <li class="step-item"><div class="step-num">2</div><div class="step-text"><strong>Maintenance mode on old app:</strong> <code>heroku maintenance:on -a &lt;app-name&gt;</code> — stops traffic to old app.</div></li>
+          <li class="step-item"><div class="step-num">3</div><div class="step-text"><strong>Final data sync:</strong> Capture Postgres backup and restore to new app to get the last few minutes of writes.</div></li>
+          <li class="step-item"><div class="step-num">4</div><div class="step-text"><strong>Verify new app:</strong> <code>heroku open -a &lt;app-name&gt;-new</code> — test all critical paths before DNS switch.</div></li>
+          <li class="step-item"><div class="step-num">5</div><div class="step-text"><strong>Update DNS CNAME:</strong> Point your domain's CNAME to the new app's DNS target (from <code>heroku domains</code>).</div></li>
+          <li class="step-item"><div class="step-num">6</div><div class="step-text"><strong>Monitor:</strong> <code>heroku logs --tail -a &lt;app-name&gt;-new</code> — watch for errors during the first 30 minutes.</div></li>
+          <li class="step-item"><div class="step-num">7</div><div class="step-text"><strong>Restore TTL:</strong> Once stable, set DNS TTL back to normal (300–3600s).</div></li>
+        </ol>
+        <div class="info-box mt-8">
+          <strong>Direct transfer note:</strong> If you used <code class="mono">heroku apps:transfer</code> (Path A), no DNS change is needed — the app keeps its URL and custom domains intact.
+        </div>
+      </div>
+    </div>
+
+    <!-- Card: Smoke Tests -->
+    <div class="card" data-search="heroku teams smoke test verify checklist endpoints validate post migration">
+      <div class="ch ch-green">✅ Post-Migration Smoke Tests</div>
+      <div class="cb">
+        <div class="text-sm text-muted mb-8">Verify everything works before declaring success:</div>
+        <ul style="list-style:none;font-size:13.2px;color:#c9b8e0;">
+          <li class="mb-6">☐ All HTTP endpoints return expected status codes</li>
+          <li class="mb-6">☐ Database connectivity confirmed (read + write)</li>
+          <li class="mb-6">☐ Background workers processing jobs</li>
+          <li class="mb-6">☐ Redis connectivity (cache hits, queue processing)</li>
+          <li class="mb-6">☐ External integrations working (webhooks, OAuth callbacks)</li>
+          <li class="mb-6">☐ Log drains receiving data</li>
+          <li class="mb-6">☐ Custom domains resolving with valid SSL</li>
+          <li class="mb-6">☐ Scheduler jobs running on schedule</li>
+          <li class="mb-6">☐ Alerts/monitoring pointed at new app</li>
+          <li class="mb-6">☐ Team members can access with correct roles</li>
+        </ul>
+        <pre class="code-block"><span class="cm"># Quick health check script</span>
+<span class="br">curl</span> <span class="fl">-s -o /dev/null -w</span> <span class="st">"%{http_code}"</span> \
+  https://&lt;app-name&gt;-new.herokuapp.com/health
+<span class="cm"># Should return: 200</span>
+
+<span class="cm"># Diff config vars between old and new</span>
+<span class="br">diff</span> &lt;(<span class="kh">heroku</span> config <span class="fl">-a</span> <span class="vl">&lt;old-app&gt;</span> <span class="fl">-s</span> | sort) \
+     &lt;(<span class="kh">heroku</span> config <span class="fl">-a</span> <span class="vl">&lt;new-app&gt;</span> <span class="fl">-s</span> | sort)</pre>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="plat-grid" style="grid-template-columns:repeat(2,1fr);gap:14px;">
+
+    <!-- Card: Cleanup -->
+    <div class="card" data-search="heroku enterprise cleanup destroy decommission cancel contract subscription">
+      <div class="ch ch-step">🧹 Cleanup &amp; Decommission</div>
+      <div class="cb">
+        <pre class="code-block"><span class="cm"># After 1-2 weeks of stable operation on Teams:</span>
+
+<span class="cm"># Destroy old apps (irreversible!)</span>
+<span class="kh">heroku</span> apps:destroy <span class="vl">&lt;app-name&gt;</span> <span class="fl">--confirm</span> <span class="vl">&lt;app-name&gt;</span>
+
+<span class="cm"># Remove members from old Enterprise team</span>
+<span class="kh">heroku</span> members:remove <span class="vl">user@example.com</span> \
+  <span class="fl">--team</span> <span class="vl">&lt;old-enterprise-team&gt;</span>
+
+<span class="cm"># Delete old Private Spaces (if applicable)</span>
+<span class="kh">heroku</span> spaces:destroy <span class="vl">&lt;space-name&gt;</span> <span class="fl">--confirm</span> <span class="vl">&lt;space-name&gt;</span>
+
+<span class="cm"># Contact Heroku support to formally cancel
+# your Enterprise subscription / contract</span></pre>
+        <div class="warn-box mt-8">
+          <strong>Keep old apps running for 1–2 weeks</strong> as a rollback safety net before destroying. You lose access to backups once an app is destroyed.
+        </div>
+      </div>
+    </div>
+
+    <!-- Card: Success Summary -->
+    <div class="card" data-search="heroku teams migration success outcomes benefits post-paid monthly">
+      <div class="ch ch-green">🎉 Post-Migration: What You've Achieved</div>
+      <div class="cb">
+        <div class="plat-grid" style="grid-template-columns:repeat(2,1fr);gap:14px;">
+          <div>
+            <div class="text-xs" style="color:#34A853;font-weight:700;text-transform:uppercase;margin-bottom:6px;">Wins</div>
+            <ul style="list-style:none;font-size:13.2px;color:#c9b8e0;">
+              <li class="mb-5">✓ Post-paid monthly billing (no annual lock-in)</li>
+              <li class="mb-5">✓ Platform fee eliminated ($12K+/year saved)</li>
+              <li class="mb-5">✓ Private Space costs eliminated</li>
+              <li class="mb-5">✓ Same Heroku DX your team already knows</li>
+              <li class="mb-5">✓ Pay only for resources actually used</li>
+              <li class="mb-5">✓ Cancel or scale anytime without penalties</li>
+            </ul>
+          </div>
+          <div>
+            <div class="text-xs" style="color:#FBBC04;font-weight:700;text-transform:uppercase;margin-bottom:6px;">Watch For</div>
+            <ul style="list-style:none;font-size:13.2px;color:#f0d060;">
+              <li class="mb-5">⚡ Monthly bill can exceed contract if you scale up</li>
+              <li class="mb-5">⚡ No dedicated support — standard ticket queue</li>
+              <li class="mb-5">⚡ SSO removed — ensure all members have MFA enabled</li>
+              <li class="mb-5">⚡ No network isolation — rely on app-level security</li>
+              <li class="mb-5">⚡ Fewer permission granularity options</li>
+              <li class="mb-5">⚡ Re-evaluate if compliance needs change</li>
+            </ul>
+          </div>
+        </div>
+        <div class="tip-box mt-8">
+          <strong>Future-proofing:</strong> If your workload grows significantly or compliance requirements return, you can always migrate to GCP/AWS (see Regions 04–15 of this guide) or re-engage Heroku for an Enterprise contract.
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+</div><!-- /r21 -->
+
+
 </div><!-- /canvas -->
 </div><!-- /viewport -->
 
@@ -2945,6 +3715,25 @@ printf <span class="st">'%s'</span> <span class="st">""</span> &gt; <span class=
   <div class="leg-item"><div class="leg-swatch" style="background:#EA4335"></div>Complex / requires VPC</div>
   <div class="leg-item"><div class="leg-swatch" style="background:#34A853;border-radius:50%"></div>AI workflow</div>
   <div class="leg-item"><div class="leg-swatch" style="background:#FF9900"></div>AWS / secrets</div>
+  <div class="leg-item"><div class="leg-swatch" style="background:#79589f"></div>Enterprise → Teams</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════════
+     ASK AI COACH WIDGET
+══════════════════════════════════════════════════════════════════════ -->
+<div id="ai-coach" aria-live="polite">
+  <button class="ai-coach-toggle" type="button" aria-expanded="false" aria-controls="ai-coach-panel-body">
+    <span class="ai-coach-icon" aria-hidden="true">&#10024;</span>
+    <span>Ask AI</span>
+  </button>
+  <div class="ai-coach-panel" id="ai-coach-panel-body" hidden role="dialog" aria-label="AI coaching prompts for the current section">
+    <button class="ai-coach-close" type="button" aria-label="Close">&times;</button>
+    <h4>Ask any AI assistant about this section</h4>
+    <p class="ai-coach-section">Currently viewing: <strong id="ai-coach-section-name">this document</strong></p>
+    <p class="ai-coach-help">Click any prompt below to copy it to your clipboard. A context preamble is included so any AI assistant (Claude, Gemini, ChatGPT, Copilot) can ground its answer in this document.</p>
+    <ul class="ai-coach-prompts" id="ai-coach-prompts"></ul>
+    <p class="ai-coach-footnote">No data is sent from this page. You supply your own AI assistant.</p>
+  </div>
 </div>
 
 <script>
@@ -2960,7 +3749,7 @@ const mmEl     = document.getElementById('minimap');
 
 // ── Canvas logical dimensions ──────────────────────────────────────
 const CANVAS_W = 4100;
-const CANVAS_H = 11600;
+const CANVAS_H = 15920;
 
 // ── Regions for minimap coloring ─────────────────────────────────
 const REGIONS = [
@@ -2981,6 +3770,10 @@ const REGIONS = [
   { x:2040, y:7829, w:1980, h:835,  color:'#301a30' },
   { x:40,   y:8789, w:1970, h:930,  color:'#181840' },
   { x:40,   y:9819, w:4020, h:1627, color:'#183018' },
+  { x:40,   y:11546,w:4020, h:1640, color:'#4a2d7c' },
+  { x:40,   y:13286,w:1980, h:2100, color:'#301a40' },
+  { x:2080, y:13286,w:1980, h:2100, color:'#3a2810' },
+  { x:40,   y:15486,w:4020, h:1200, color:'#301a30' },
 ];
 
 // ── Nav anchor map ────────────────────────────────────────────────
@@ -2991,6 +3784,8 @@ const NAV_ANCHORS = {
   r10:{ x:1410, y:4938 }, r11:{ x:2780, y:4938 }, r12:{ x:40,   y:6299 },
   r13:{ x:2040, y:6299 }, r14:{ x:40,   y:7829 }, r15:{ x:2040, y:7829 },
   r16:{ x:40,   y:8789 }, r17:{ x:40,   y:9819 },
+  r18:{ x:40,   y:11546}, r19:{ x:40,   y:12666}, r20:{ x:2080, y:12666},
+  r21:{ x:40,   y:14726},
 };
 
 // ── Zoom ──────────────────────────────────────────────────────────
@@ -3132,9 +3927,306 @@ document.addEventListener('keydown', e => {
   }
 });
 
+// ── Deep-linking & browser history ──────────────────────────────
+let currentHashRegion = null;
+let hashTimer = null;
+
+function getVisibleRegion() {
+  const vpCX = (viewport.scrollLeft / currentZoom) + (viewport.clientWidth / currentZoom) / 2;
+  const vpCY = (viewport.scrollTop / currentZoom) + (viewport.clientHeight / currentZoom) / 2;
+  let best = null, bestDist = Infinity;
+  for (const [id, a] of Object.entries(NAV_ANCHORS)) {
+    const dist = Math.hypot(vpCX - a.x, vpCY - a.y);
+    if (dist < bestDist) { bestDist = dist; best = id; }
+  }
+  return best;
+}
+
+function updateHash() {
+  const region = getVisibleRegion();
+  if (region && region !== currentHashRegion) {
+    currentHashRegion = region;
+    history.pushState(null, '', '#' + region);
+    document.querySelectorAll('.nav-item').forEach(n => {
+      n.classList.toggle('active', !!(n.getAttribute('onclick') && n.getAttribute('onclick').includes(region)));
+    });
+  }
+}
+
+viewport.addEventListener('scroll', () => {
+  clearTimeout(hashTimer);
+  hashTimer = setTimeout(updateHash, 3000);
+}, { passive: true });
+
+window.addEventListener('popstate', () => {
+  const h = location.hash.replace('#', '');
+  if (h && NAV_ANCHORS[h]) navTo(h);
+});
+
 // ── Init ─────────────────────────────────────────────────────────
 setZoom(1.0);
 requestAnimationFrame(updateMinimap);
+// Navigate to hash on initial load
+if (location.hash) {
+  const initHash = location.hash.replace('#', '');
+  if (NAV_ANCHORS[initHash]) setTimeout(() => navTo(initHash), 100);
+}
+
+// ══════════════════════════════════════════════════════════════════════
+//  ASK AI COACH — context-sensitive prompt helper
+// ══════════════════════════════════════════════════════════════════════
+(function() {
+  const aiPrompts = {
+    'default': [
+      "I'm reading a Heroku PaaS migration guide. Summarize the section I'm viewing in plain English.",
+      "What is the single most important step from this section if I'm migrating today?",
+      "What are the risks or gotchas I should watch for in this part of the migration?",
+      "If I had only 30 minutes, what would you prioritize from this section?"
+    ],
+    'r01': [
+      "Summarize the case for migrating off Heroku in 3 bullet points for my CTO.",
+      "At what monthly spend does migrating to GCP become financially worthwhile vs. staying on Heroku?",
+      "What is the difference between staying on Heroku Teams vs. leaving Heroku entirely?",
+      "My team has no Kubernetes experience. Is migrating off Heroku realistic for us?"
+    ],
+    'r02': [
+      "Compare Cloud Run, Railway, and Render as Heroku replacements for a Node.js app.",
+      "Why does this guide recommend GCP Cloud Run over other Heroku alternatives?",
+      "What is the learning curve difference between Cloud Run and Fly.io for a Heroku developer?",
+      "Which platform alternative is best if I want to stay closest to the Heroku developer experience?"
+    ],
+    'r03': [
+      "Map my Heroku add-ons (Postgres, Redis, Papertrail, SendGrid) to their GCP equivalents.",
+      "Which Heroku add-on migrations are trivial vs. complex?",
+      "Can I keep using SendGrid if I move to GCP, or do I need to switch email providers?",
+      "What is the GCP equivalent of Heroku Scheduler?"
+    ],
+    'r04': [
+      "Explain the target GCP architecture for a typical Heroku app in plain terms.",
+      "Why does the guide recommend VPC + private IPs for Cloud SQL instead of public access?",
+      "Draw a comparison between Heroku's architecture and the equivalent GCP setup.",
+      "What GCP services do I need to set up before I start migrating apps?"
+    ],
+    'r05': [
+      "Walk me through the GCP project setup prerequisites step by step.",
+      "Which GCP APIs do I need to enable before starting the migration?",
+      "What IAM roles does my service account need for Cloud Run + Cloud SQL + Secret Manager?",
+      "Explain the gcloud CLI setup commands in this section."
+    ],
+    'r06': [
+      "Explain the Heroku Postgres to Cloud SQL migration process like I've never used GCP.",
+      "What is pg_dump vs. pg_restore, and why does GCP need the dump uploaded to GCS first?",
+      "How do I verify my data migrated correctly after the Postgres import?",
+      "What is the Cloud SQL Auth Proxy, and when would I use it vs. private IP?"
+    ],
+    'r07': [
+      "Can I just start fresh with a new Redis instance, or do I need to migrate data?",
+      "Explain Memorystore vs. Heroku Redis — what are the key differences?",
+      "My app uses Redis for Sidekiq/Bull queues. How do I handle the queue during migration?",
+      "What Redis plan should I pick on Memorystore to match my Heroku Redis Premium-0?"
+    ],
+    'r08': [
+      "Compare Papertrail to Cloud Logging — what do I gain and lose?",
+      "How do I set up structured logging for Cloud Run like I had with Heroku log drains?",
+      "What is Log-based Alerting in GCP, and how does it replace my Papertrail alerts?",
+      "Show me how to query Cloud Logging to find errors in the last hour."
+    ],
+    'r09': [
+      "Explain how to migrate from Bucketeer (S3 proxy) to Google Cloud Storage.",
+      "Do I need to change my file upload code when moving from S3 to GCS?",
+      "How do I bulk-copy my existing S3 files to a GCS bucket?",
+      "What are signed URLs in GCS, and how do they compare to S3 pre-signed URLs?"
+    ],
+    'r10': [
+      "Explain GCP Secret Manager vs. Heroku config vars for managing secrets.",
+      "How do I bulk-import all my Heroku config vars into Secret Manager?",
+      "How does my Cloud Run service access secrets at runtime?",
+      "What is the difference between mounting secrets as env vars vs. files in Cloud Run?"
+    ],
+    'r11': [
+      "My app uses the SendGrid Heroku add-on. What changes when I move to GCP?",
+      "Do I need to reconfigure SendGrid, or does it just work after migration?",
+      "What is the difference between using SendGrid via Heroku add-on vs. direct account?",
+      "Should I consider switching to a GCP-native email service?"
+    ],
+    'r12': [
+      "Explain containerizing a Heroku app for Cloud Run like I've never written a Dockerfile.",
+      "What is the difference between Heroku buildpacks and Docker multi-stage builds?",
+      "How do I handle a Procfile with both web and worker processes in Cloud Run?",
+      "What is Cloud Build, and how does it replace Heroku's git-push deployment?"
+    ],
+    'r13': [
+      "Explain VPC networking for Cloud Run in plain English.",
+      "Why do I need Cloud NAT if my Cloud Run service uses VPC egress?",
+      "What is Private Services Access, and why is it needed for Cloud SQL?",
+      "How do I verify my Cloud Run service can actually reach my database and Redis?"
+    ],
+    'r14': [
+      "How do I migrate Heroku Scheduler jobs to GCP Cloud Scheduler?",
+      "Explain the Cloud Scheduler → Cloud Run HTTP pattern for background jobs.",
+      "What happens if my scheduled job takes longer than the Cloud Run request timeout?",
+      "How do I secure my scheduler endpoints so only Cloud Scheduler can invoke them?"
+    ],
+    'r15': [
+      "Walk me through the DNS cutover process with zero downtime.",
+      "What should I set my DNS TTL to before cutover, and how far in advance?",
+      "How do I test the GCP deployment before switching DNS?",
+      "What is my rollback plan if something goes wrong after DNS cutover?"
+    ],
+    'r16': [
+      "Give me the gcloud equivalent of 'heroku logs --tail'.",
+      "How do I scale my Cloud Run service up/down like 'heroku ps:scale'?",
+      "What is the gcloud equivalent of 'heroku run bash' for one-off commands?",
+      "Map the 5 heroku CLI commands I use most to their gcloud equivalents."
+    ],
+    'r17': [
+      "How can Claude Code help me generate all the GCP infrastructure commands?",
+      "What context should I give an AI assistant to get the best migration scripts?",
+      "Can AI generate my entire Dockerfile and cloudbuild.yaml from my Procfile?",
+      "What is the realistic time savings from using AI assistance for this migration?"
+    ],
+    'r18': [
+      "Should I switch from Heroku Enterprise to Teams, or leave Heroku entirely?",
+      "Explain the two paths to Teams migration: in-place downgrade vs. new team creation.",
+      "What Enterprise features will I lose on Teams, and do any of them matter for my use case?",
+      "Calculate my break-even: when does Teams cost less than my Enterprise contract?"
+    ],
+    'r19': [
+      "How do I audit which of my apps use Enterprise-only features?",
+      "What are the hard blockers that prevent me from switching to Teams?",
+      "Explain how to replace Heroku Connect with Salesforce REST API calls.",
+      "My apps use Private Spaces. What do I need to refactor before switching to Teams?"
+    ],
+    'r20': [
+      "What is the difference between 'heroku apps:transfer' and forking/recreating an app?",
+      "Walk me through migrating a Postgres database between Heroku apps.",
+      "How do I handle Redis migration if my app uses it for job queues?",
+      "What are the most common gotchas when transferring apps between Heroku teams?"
+    ],
+    'r21': [
+      "Give me a step-by-step DNS cutover checklist for the Heroku Teams switch.",
+      "What smoke tests should I run after migrating to the new Teams account?",
+      "How long should I keep the old Enterprise apps running as a rollback safety net?",
+      "What do I need to do to formally cancel my Heroku Enterprise contract?"
+    ]
+  };
+
+  const sectionLabels = {
+    'default': 'this document',
+    'r01': '01 · Why Migrate from Heroku',
+    'r02': '02 · PaaS Comparisons',
+    'r03': '03 · Mapping Heroku Add-Ons',
+    'r04': '04 · GCP Architecture',
+    'r05': '05 · Phase 0: Prerequisites',
+    'r06': '06 · Phase 1: Database',
+    'r07': '07 · Phase 2: Cache (Redis)',
+    'r08': '08 · Phase 3: Logging',
+    'r09': '09 · Phase 4: Storage',
+    'r10': '10 · Phase 5: Secrets',
+    'r11': '11 · Phase 6: Email',
+    'r12': '12 · Phase 7: Containers',
+    'r13': '13 · Phase 8: Networking',
+    'r14': '14 · Phase 9: Scheduler',
+    'r15': '15 · Phase 10: DNS Cutover',
+    'r16': '16 · CLI Equivalents',
+    'r17': '17 · AI-Assisted Config',
+    'r18': '18 · Enterprise vs. Teams Decision',
+    'r19': '19 · Audit & Preparation',
+    'r20': '20 · App Migration & Data',
+    'r21': '21 · Cutover & Cleanup'
+  };
+
+  const coach = document.getElementById('ai-coach');
+  if (!coach) return;
+  const toggle = coach.querySelector('.ai-coach-toggle');
+  const panel = coach.querySelector('.ai-coach-panel');
+  const closeBtn = coach.querySelector('.ai-coach-close');
+  const sectionLabel = document.getElementById('ai-coach-section-name');
+  const promptsList = document.getElementById('ai-coach-prompts');
+  let currentTopic = 'default';
+
+  function copyToClipboard(text) {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).catch(() => fallbackCopy(text));
+    } else { fallbackCopy(text); }
+  }
+  function fallbackCopy(text) {
+    const ta = document.createElement('textarea');
+    ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.select();
+    try { document.execCommand('copy'); } catch(e) {}
+    document.body.removeChild(ta);
+  }
+
+  function buildPayload(promptText, topicKey) {
+    const anchor = (topicKey && topicKey !== 'default') ? ('#' + topicKey) : '';
+    const label = sectionLabels[topicKey] || 'this document';
+    const preamble = `Context: I'm reading "Heroku PaaS Migration Guide" by Paul Coleman, currently at "${label}". The document covers migrating from Heroku to GCP Cloud Run, and also switching from Heroku Enterprise to Teams. Please ground your answer in practical Heroku/GCP migration knowledge. My question:\n\n`;
+    return preamble + promptText;
+  }
+
+  function renderPrompts(topicKey) {
+    const list = aiPrompts[topicKey] || aiPrompts['default'];
+    promptsList.innerHTML = '';
+    list.forEach(text => {
+      const li = document.createElement('li');
+      const btn = document.createElement('button');
+      btn.className = 'ai-coach-prompt'; btn.type = 'button';
+      btn.textContent = text;
+      btn.addEventListener('click', () => {
+        copyToClipboard(buildPayload(text, topicKey));
+        btn.classList.add('copied');
+        setTimeout(() => btn.classList.remove('copied'), 1800);
+      });
+      li.appendChild(btn);
+      promptsList.appendChild(li);
+    });
+    sectionLabel.textContent = sectionLabels[topicKey] || 'this document';
+  }
+
+  toggle.addEventListener('click', () => {
+    const willOpen = !!panel.hidden;
+    panel.hidden = !willOpen;
+    toggle.setAttribute('aria-expanded', String(willOpen));
+  });
+  closeBtn.addEventListener('click', () => {
+    panel.hidden = true; toggle.setAttribute('aria-expanded', 'false');
+  });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && !panel.hidden) {
+      panel.hidden = true; toggle.setAttribute('aria-expanded', 'false');
+    }
+  });
+
+  // Track which region is in view based on viewport scroll position
+  function pickActiveRegion() {
+    const vpScrollX = viewport.scrollLeft / currentZoom;
+    const vpScrollY = viewport.scrollTop / currentZoom;
+    const vpCenterX = vpScrollX + (viewport.clientWidth / currentZoom) / 2;
+    const vpCenterY = vpScrollY + (viewport.clientHeight / currentZoom) / 2;
+
+    let bestId = 'default', bestDist = Infinity;
+    for (const [id, anchor] of Object.entries(NAV_ANCHORS)) {
+      const dx = vpCenterX - anchor.x;
+      const dy = vpCenterY - anchor.y;
+      const dist = Math.sqrt(dx*dx + dy*dy);
+      if (dist < bestDist) { bestDist = dist; bestId = id; }
+    }
+    if (bestId !== currentTopic) {
+      currentTopic = bestId;
+      renderPrompts(bestId);
+    }
+  }
+
+  let aiRaf = null;
+  viewport.addEventListener('scroll', () => {
+    if (aiRaf) return;
+    aiRaf = requestAnimationFrame(() => { aiRaf = null; pickActiveRegion(); });
+  }, { passive: true });
+
+  renderPrompts('default');
+  setTimeout(pickActiveRegion, 300);
+})();
 </script>
 </body>
 </html>
