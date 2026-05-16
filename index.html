@@ -597,13 +597,13 @@ html, body {
   </div>
   <div id="hdr-title">
     <h1>Heroku&reg; PaaS Migration</h1>
-    <p>Last Modified 2026-APR-28 &middot; &copy; 2026 Dr. Paul Coleman</p>
+    <p>Last Modified 2026-MAY-15 &middot; &copy; 2026 Dr. Paul Coleman</p>
   </div>
   <div id="hdr-stats">
     <div class="st"><div class="st-dot" style="background:#79589f"></div><span class="st-v">7</span>&nbsp;Platforms</div>
     <div class="st"><div class="st-dot" style="background:#4285F4"></div><span class="st-v">10</span>&nbsp;GCP Phases</div>
     <div class="st"><div class="st-dot" style="background:#34A853"></div><span class="st-v">5</span>&nbsp;Add-ons</div>
-    <div class="st"><div class="st-dot" style="background:#FBBC04"></div><span class="st-v">32</span>&nbsp;CLI pairs</div>
+    <div class="st"><div class="st-dot" style="background:#FBBC04"></div><span class="st-v">30</span>&nbsp;CLI pairs</div>
     <div class="st"><div class="st-dot" style="background:#EA4335"></div><span class="st-v">5</span>&nbsp;AI workflows</div>
   </div>
   <input type="text" id="search-box" placeholder="/ Search…" autocomplete="off">
@@ -715,10 +715,10 @@ html, body {
         </div>
         <table class="tbl">
           <tr><th>Year</th><th>Event</th><th>Impact</th></tr>
-          <tr><td class="bold" style="color:#FBBC04">2022</td><td>Free tier eliminated for all dynos, Postgres, Redis</td><td class="score-hi">High — Forced all hobby apps to pay</td></tr>
-          <tr><td class="bold" style="color:#FBBC04">2023</td><td>Heroku Data partners (third-party Postgres/Redis)</td><td class="score-md">Medium — SLA/pricing uncertainty</td></tr>
-          <tr><td class="bold" style="color:#FBBC04">2024</td><td>Eco dyno replaces free; no new platform features</td><td class="score-md">Medium — No container-native roadmap</td></tr>
-          <tr><td class="bold" style="color:#EA4335">2025</td><td>Pricing increases across Shield/Enterprise tiers; CI in maintenance</td><td class="score-hi">High — Cost at scale doubles</td></tr>
+          <tr><td class="bold" style="color:#FBBC04">2022</td><td>Free plans retired — free dynos, Postgres, and Redis replaced by paid Eco/Mini plans</td><td class="score-hi">High — all free apps forced onto paid plans</td></tr>
+          <tr><td class="bold" style="color:#FBBC04">2023</td><td>Heroku Data partner program shifts (third-party Postgres/Redis)</td><td class="score-md">Medium — SLA/pricing uncertainty</td></tr>
+          <tr><td class="bold" style="color:#FBBC04">2024</td><td>Legacy Postgres Mini/Basic plans retired; replaced by Essential-tier plans</td><td class="score-md">Medium — forced data-plan migration</td></tr>
+          <tr><td class="bold" style="color:#EA4335">2025</td><td>Pricing increases across Shield/Enterprise tiers</td><td class="score-hi">High — cost at scale rises sharply</td></tr>
         </table>
         <div class="warn-box mt-8">
           <strong>Bottom line:</strong> Heroku is stable for existing workloads but has no strategic investment path for enterprise customers. Only the Team-level subscription plans can be setup online in self-service ways. 
@@ -744,7 +744,7 @@ html, body {
             <div class="mb-8" style="font-size:12.1px;font-weight:700;color:#EA4335;text-transform:uppercase;letter-spacing:.08em;">✗ MIGRATE if…</div>
             <div class="con mb-6 text-sm">Heroku Postgres plan limits hit (storage/connections)</div>
             <div class="con mb-6 text-sm">Need multi-region deployment or custom VPC</div>
-            <div class="con mb-6 text-sm">Bill exceeds $500/month (GCP is 40–60% cheaper)</div>
+            <div class="con mb-6 text-sm">Bill exceeds $500/month (GCP typically 20–45% cheaper, widening with scale)</div>
             <div class="con mb-6 text-sm">Container-native CI/CD is a team requirement</div>
             <div class="con mb-6 text-sm">Compliance requires private networking for DB/cache</div>
           </div>
@@ -772,7 +772,7 @@ html, body {
         </div>
         <div class="arch-arrow">↓</div>
         <div class="arch-row">
-          <div class="arch-box cache">🔴 Heroku Redis<br><span class="text-xs text-muted">Mini → Premium-3 · shared by web + workers</span></div>
+          <div class="arch-box cache">🔴 Heroku Key-Value Store<br><span class="text-xs text-muted">Mini → Premium-3 · shared by web + workers</span></div>
           <div class="arch-box logging">📋 Papertrail<br><span class="text-xs text-muted">Log drain add-on</span></div>
         </div>
         <div class="arch-arrow">↓</div>
@@ -815,7 +815,7 @@ html, body {
           </tbody>
         </table>
         <div class="tip-box mt-8">
-          <strong>Good news:</strong> Each of these services has a 1:1 GCP equivalent —
+          <strong>Good news:</strong> Each of these services has a managed GCP equivalent —
           and SendGrid doesn't change at all. The hardest migrations are Postgres and VPC networking.
         </div>
       </div>
@@ -825,21 +825,23 @@ html, body {
     <div class="card" data-search="cost pricing heroku gcp comparison">
       <div class="ch ch-amber">💰 Cost Reality at Scale</div>
       <div class="cb">
-        <div class="text-sm text-muted mb-8">Approximate monthly cost for a production-grade app: 2 web dynos, 1 worker dyno, Postgres Standard-2, Redis Premium-0, Papertrail Fixa, Bucketeer Hobbyist</div>
+        <div class="text-sm text-muted mb-8">Approximate monthly cost for a small production app: 2 web dynos, 1 worker dyno, Postgres Standard-0, Redis Premium-0, Papertrail Fixa, Bucketeer Hobbyist. Figures are list-price estimates — verify against current pricing for your region and usage.</div>
         <table class="tbl">
           <tr><th>Component</th><th class="th">Heroku</th><th class="tg">GCP Equiv.</th></tr>
           <tr><td class="cf">Web runtime (2 units)</td><td class="th score-lo">~$100/mo (2× Standard-2X)</td><td class="tg score-hi">~$18–40/mo (Cloud Run)</td></tr>
           <tr><td class="cf">Worker dyno (1 unit)</td><td class="th score-lo">~$50/mo (1× Standard-2X)</td><td class="tg score-hi">~$10–20/mo (Cloud Run min=1, 0.5 vCPU)</td></tr>
-          <tr><td class="cf">Postgres (Standard-2)</td><td class="th score-lo">~$50/mo</td><td class="tg score-hi">~$25–35/mo (Cloud SQL db-g1-small)</td></tr>
-          <tr><td class="cf">Redis (Premium-0)</td><td class="th score-lo">~$30/mo</td><td class="tg score-hi">~$16/mo (Memorystore Basic 1GB)</td></tr>
-          <tr><td class="cf">Logging (Papertrail)</td><td class="th score-md">~$10/mo (Fixa)</td><td class="tg score-hi">~$0–5/mo (Cloud Logging free tier)</td></tr>
-          <tr><td class="cf">Object storage</td><td class="th score-md">~$5/mo (Bucketeer)</td><td class="tg score-hi">~$2/mo (GCS standard)</td></tr>
-          <tr><td class="cf">Email (SendGrid)</td><td class="th">$15/mo (Essentials)</td><td class="tg">$15/mo (unchanged)</td></tr>
-          <tr><td class="cf bold">Total</td><td class="th score-lo bold">~$260/mo</td><td class="tg score-hi bold">~$86–133/mo</td></tr>
+          <tr><td class="cf">Postgres (Standard-0)</td><td class="th score-lo">~$50/mo</td><td class="tg score-md">~$50–70/mo (Cloud SQL, 1 vCPU dedicated, SLA-backed)</td></tr>
+          <tr><td class="cf">Redis (Premium-0)</td><td class="th score-lo">~$30/mo</td><td class="tg score-hi">~$25/mo (Memorystore Basic 1 GB — no HA)</td></tr>
+          <tr><td class="cf">HTTPS load balancing</td><td class="th">Included (Heroku Router)</td><td class="tg score-md">~$18–25/mo (Global HTTPS LB)</td></tr>
+          <tr><td class="cf">Logging (Papertrail)</td><td class="th score-md">~$10/mo (Fixa)</td><td class="tg score-hi">~$0–5/mo (Cloud Logging — 50 GiB/mo free)</td></tr>
+          <tr><td class="cf">Object storage</td><td class="th score-md">~$5/mo (Bucketeer)</td><td class="tg score-hi">~$2/mo (GCS Standard)</td></tr>
+          <tr><td class="cf">Email (SendGrid)</td><td class="th">~$20/mo (Essentials 50K)</td><td class="tg">~$20/mo (unchanged)</td></tr>
+          <tr><td class="cf bold">Total</td><td class="th score-lo bold">~$265/mo</td><td class="tg score-md bold">~$143–207/mo</td></tr>
         </table>
         <div class="info-box mt-8">
-          <strong>Savings potential: 45–65%</strong> at this scale. Cloud Run's scale-to-zero means dev/staging
-          environments cost near zero during off-hours — a feature Heroku's Eco dynos only partially address.
+          <strong>Savings potential: ~20–45%</strong> at this small scale — and the margin widens as you grow,
+          since the fixed load-balancer cost amortizes over larger workloads. Cloud Run's scale-to-zero also means
+          dev/staging environments cost near zero during off-hours, which Heroku's Eco dynos only partially address.
         </div>
       </div>
     </div>
@@ -943,14 +945,14 @@ html, body {
         <div class="pro">Closest UX to Heroku — near-instant onboarding</div>
         <div class="pro">Native Postgres + Redis in same project</div>
         <div class="pro">Git-push deploy with zero config</div>
-        <div class="con">No dedicated VPC — public IPs only</div>
+        <div class="con">Private networking between services, but no configurable VPC</div>
         <div class="con">Object storage requires third-party (S3, Cloudflare R2)</div>
         <div class="con">Not suitable for compliance/regulated workloads</div>
         <hr class="divider">
         <div class="plat-stat"><span>Postgres</span><span class="score-hi">Railway Postgres ✓</span></div>
         <div class="plat-stat"><span>Redis</span><span class="score-hi">Railway Redis ✓</span></div>
         <div class="plat-stat"><span>Object storage</span><span class="score-lo">External only ✗</span></div>
-        <div class="plat-stat"><span>Private networking</span><span class="score-lo">None ✗</span></div>
+        <div class="plat-stat"><span>Private networking</span><span class="score-md">Service-only ⚠</span></div>
         <div class="plat-stat"><span>Cron / Scheduler</span><span class="score-md">Cron Jobs (beta)</span></div>
         <div class="plat-stat"><span>Migration complexity</span><span><span class="badge b-simple">Simple</span></span></div>
       </div>
@@ -989,7 +991,7 @@ html, body {
         <div class="pro">True container deployment with fly.toml config</div>
         <div class="pro">Edge-native — 35+ regions, very low latency</div>
         <div class="pro">Fly Postgres (managed) included</div>
-        <div class="con">Redis is community Upstash add-on, not native</div>
+        <div class="con">Redis is via the managed Upstash integration, not first-party</div>
         <div class="con">No native managed object storage</div>
         <div class="con">Persistent volumes have scaling limits</div>
         <hr class="divider">
@@ -1040,8 +1042,8 @@ html, body {
 
         <hr class="divider">
         <div class="tip-box" style="margin-top:10px;">
-          <strong>GCP is the sweet spot</strong> for teams leaving Heroku: it has a 1:1 managed service for every Heroku add-on,
-          native VPC private networking, and AI tooling built in — at 40–65% lower cost.
+          <strong>GCP is the sweet spot</strong> for teams leaving Heroku: it has a managed service for every Heroku add-on,
+          native VPC private networking, and AI tooling built in — typically at lower cost, with the margin widening as you scale.
         </div>
         <div class="info-box mt-8">
           <strong>SendGrid note:</strong> On every platform, SendGrid is used as-is via SMTP/API. Only the <code class="mono">SENDGRID_API_KEY</code> env var storage location changes.
@@ -1122,7 +1124,7 @@ html, body {
 
       <!-- Redis -->
       <tr>
-        <td class="cf">🔴 Heroku Redis</td>
+        <td class="cf">🔴 Heroku Key-Value Store</td>
         <td class="th">Mini → Premium-3</td>
         <td class="tg">
           <strong>Memorystore for Redis</strong><br>
@@ -1150,9 +1152,9 @@ html, body {
           <span class="text-xs text-muted">Internal Redis URL</span>
         </td>
         <td class="tf">
-          <strong>Upstash (add-on)</strong><br>
+          <strong>Upstash (managed)</strong><br>
           <span class="badge b-moderate">Moderate</span><br>
-          <span class="text-xs text-muted">HTTP-based Redis; not socket</span>
+          <span class="text-xs text-muted">Managed Upstash; RESP + HTTP APIs</span>
         </td>
         <td><span class="badge b-simple">Simple</span> — Redis is ephemeral cache; no data export needed. Just swap REDIS_URL. <span class="text-xs text-muted">Caveat: GCP Memorystore requires VPC — see Phase 8.</span></td>
       </tr>
@@ -1160,11 +1162,11 @@ html, body {
       <!-- Papertrail -->
       <tr>
         <td class="cf">📋 Papertrail</td>
-        <td class="th">Fixa → Strum (log drain)</td>
+        <td class="th">Fixa or larger (log drain)</td>
         <td class="tg">
           <strong>Cloud Logging</strong><br>
           <span class="badge b-simple">Simple</span> Pino/Winston JSON<br>
-          <span class="text-xs text-muted">Structured logs auto-parsed; free 1GB/day</span>
+          <span class="text-xs text-muted">Structured logs auto-parsed; 50 GiB/mo free</span>
         </td>
         <td class="ta">
           <strong>CloudWatch Logs</strong><br>
@@ -1234,7 +1236,7 @@ html, body {
       <!-- SendGrid -->
       <tr>
         <td class="cf">📧 SendGrid</td>
-        <td class="th">Essentials 50k → Pro 100k</td>
+        <td class="th">Essentials 50K → 100K</td>
         <td class="tg">
           <strong>SendGrid (unchanged)</strong><br>
           <span class="badge b-simple">Simple</span> — no change<br>
@@ -1268,7 +1270,7 @@ html, body {
       <!-- Heroku Scheduler -->
       <tr>
         <td class="cf">⏰ Heroku Scheduler</td>
-        <td class="th">Free (bundled)</td>
+        <td class="th">Add-on free; runs billed as dyno-seconds</td>
         <td class="tg">
           <strong>Cloud Scheduler + Cloud Run</strong><br>
           <span class="badge b-moderate">Moderate</span> OIDC auth<br>
@@ -1360,7 +1362,7 @@ html, body {
       </div>
       <div style="font-size:13.2px;line-height:1.7;">
         <span style="color:#79c0ff;font-weight:600;">GCP Google-Managed SSL:</span>
-        Provisions a <strong>Google Trust Services</strong> cert automatically on the Global HTTPS LB.
+        Provisions a <strong>Google-managed</strong> cert (issued by Let's Encrypt or Google Trust Services, depending on certificate type) automatically on the Global HTTPS LB.
         TLS terminates at <strong>GCP's Load Balancer</strong> — Cloud Run receives HTTP/2 internally.
         Point your DNS <strong>A record</strong> to the LB IP (<code class="mono">gcp static load balancer ip assigned to your apps</code>).<br/>
         The cert is <em>per-LB-frontend</em>, attached to the target HTTPS proxy — not the Cloud Run service directly.
@@ -1397,7 +1399,7 @@ html, body {
             <tr><td class="th">Web Dyno (Node.js)</td><td class="tg"><strong>Cloud Run</strong></td><td>Stateless containers; scale-to-zero; pay-per-request</td></tr>
             <tr><td class="th">Worker Dynos</td><td class="tg"><strong>Cloud Run (workers svc)</strong></td><td>Separate service; OIDC-authenticated HTTP triggers</td></tr>
             <tr><td class="th">Heroku Postgres</td><td class="tg"><strong>Cloud SQL PostgreSQL 15</strong></td><td>Private IP; HA replica; same Postgres wire protocol</td></tr>
-            <tr><td class="th">Heroku Redis</td><td class="tg"><strong>Memorystore for Redis 7</strong></td><td>Private IP via VPC egress; Standard HA tier</td></tr>
+            <tr><td class="th">Heroku Key-Value Store</td><td class="tg"><strong>Memorystore for Redis 7</strong></td><td>Private IP via VPC egress; Standard HA tier</td></tr>
             <tr><td class="th">Heroku Scheduler</td><td class="tg"><strong>Cloud Scheduler</strong></td><td>Native GCP cron; OIDC auth to Cloud Run</td></tr>
             <tr><td class="th">Bucketeer (S3)</td><td class="tg"><strong>Cloud Storage (GCS)</strong></td><td>IAM-native; signed URLs; same object-key pattern</td></tr>
             <tr><td class="th">Papertrail</td><td class="tg"><strong>Cloud Logging</strong></td><td>Pino JSON auto-parsed; structured queries; alerting</td></tr>
@@ -1414,7 +1416,7 @@ html, body {
         <div class="cb text-sm">
           <table class="tbl" style="font-size:12.7px;">
             <tr><th>Account</th><th>Roles Required</th></tr>
-            <tr><td><code class="mono">app-run@project.iam…</code></td><td><span style="color:#9b8ab0;">cloudsql.client · secretmanager.secretAccessor · storage.objectAdmin · redis.viewer</span></td></tr>
+            <tr><td><code class="mono">app-run@project.iam…</code></td><td><span style="color:#9b8ab0;">cloudsql.client · secretmanager.secretAccessor · storage.objectAdmin · iam.serviceAccountTokenCreator (on itself — needed for GCS signed URLs)</span></td></tr>
             <tr><td><code class="mono">scheduler@project.iam…</code></td><td><span style="color:#9b8ab0;">run.invoker (on workers service only)</span></td></tr>
             <tr><td><code class="mono">build@project.iam…</code></td><td><span style="color:#9b8ab0;">run.developer · artifactregistry.writer · storage.objectViewer</span></td></tr>
           </table>
@@ -1595,35 +1597,47 @@ html, body {
       <pre class="code-block"><span class="cm"># Capture a fresh backup on Heroku</span>
 <span class="kh">heroku</span> pg:backups:capture <span class="fl">--app</span> <span class="vl">myapp-prod</span>
 
-<span class="cm"># Download the backup as a .dump file</span>
+<span class="cm"># Download it — this is a pg_dump CUSTOM-format archive (.dump)</span>
 <span class="kh">heroku</span> pg:backups:download <span class="fl">-o</span> <span class="st">db-export.dump</span> <span class="fl">--app</span> <span class="vl">myapp-prod</span>
+<span class="cm"># Use this .dump archive with pg_restore (see Step 1.3, Option B).</span>
 
-<span class="cm"># Or: export via pg_dump directly (requires DATABASE_URL)</span>
-<span class="br">pg_dump</span> <span class="fl">-Fc</span> <span class="fl">-v</span> <span class="ev">$DATABASE_URL</span> <span class="fl">-f</span> <span class="st">db-export.dump</span>
+<span class="cm"># For the "gcloud sql import sql" route, export PLAIN SQL instead —</span>
+<span class="cm"># that command runs psql and does NOT accept .dump archives:</span>
+<span class="br">pg_dump</span> <span class="fl">--format=plain</span> <span class="fl">--no-owner</span> <span class="fl">--no-acl</span> <span class="ev">$DATABASE_URL</span> <span class="fl">-f</span> <span class="st">db-export.sql</span>
+<span class="br">gzip</span> db-export.sql   <span class="cm"># gcloud accepts plain .sql or gzipped .sql.gz</span>
 
-<span class="cm"># Verify the dump is not empty</span>
-<span class="br">ls -lh</span> db-export.dump   <span class="cm"># Should be > 0 bytes</span></pre>
+<span class="cm"># Verify the export is not empty</span>
+<span class="br">ls -lh</span> db-export.*   <span class="cm"># Should be > 0 bytes</span></pre>
     </div>
   </div>
 
   <div class="card" data-search="cloud sql create instance postgres">
     <div class="ch ch-step">Step 1.2 — Create Cloud SQL Instance</div>
     <div class="cb">
-      <pre class="code-block"><span class="cm"># Create Cloud SQL PostgreSQL 15 instance (production)</span>
+      <div class="warn-box mb-8">
+        <strong>Prerequisite — Private Service Access:</strong> a private-IP Cloud SQL instance
+        requires the VPC and a Private Service Access (PSA) peering to exist <em>first</em>.
+        If you have not done Phase 8 yet, run its Steps 8.1–8.2 now (create the VPC, allocate a
+        <code class="mono">VPC_PEERING</code> range, and run <code class="mono">gcloud services vpc-peerings connect</code>).
+        Without PSA, <code class="mono">gcloud sql instances create --network=…</code> fails.
+      </div>
+      <pre class="code-block"><span class="cm"># Create Cloud SQL PostgreSQL 15 instance</span>
 <span class="kg">gcloud</span> sql instances create <span class="vl">myapp-db-prod</span> <span class="fl">\</span>
   <span class="fl">--database-version</span>=POSTGRES_15 <span class="fl">\</span>
-  <span class="fl">--tier</span>=db-g1-small <span class="fl">\</span>
+  <span class="fl">--tier</span>=db-custom-1-3840 <span class="fl">\</span>
   <span class="fl">--region</span>=us-central1 <span class="fl">\</span>
   <span class="fl">--no-assign-ip</span> <span class="fl">\</span>
-  <span class="fl">--network</span>=<span class="vl">myapp-vpc</span> <span class="fl">\</span>
+  <span class="fl">--network</span>=projects/<span class="vl">YOUR_PROJECT_ID</span>/global/networks/<span class="vl">myapp-vpc</span> <span class="fl">\</span>
   <span class="fl">--availability-type</span>=REGIONAL
+<span class="cm"># db-custom-1-3840 = 1 vCPU / 3.75 GB, SLA-backed. Shared-core
+# tiers (db-g1-small) cost less but are dev/test only — no SLA.</span>
 
 <span class="cm"># Create the app database</span>
 <span class="kg">gcloud</span> sql databases create <span class="vl">myapp</span> <span class="fl">--instance</span>=<span class="vl">myapp-db-prod</span>
 
-<span class="cm"># Set the postgres user password</span>
+<span class="cm"># Set the postgres user password — prompt keeps it out of shell history</span>
 <span class="kg">gcloud</span> sql users set-password postgres <span class="fl">\</span>
-  <span class="fl">--instance</span>=<span class="vl">myapp-db-prod</span> <span class="fl">--password</span>=<span class="vl">STRONG_PASSWORD</span>
+  <span class="fl">--instance</span>=<span class="vl">myapp-db-prod</span> <span class="fl">--prompt-for-password</span>
 
 <span class="cm"># Get the private IP address (store for DATABASE_URL)</span>
 <span class="kg">gcloud</span> sql instances describe <span class="vl">myapp-db-prod</span> <span class="fl">\</span>
@@ -1634,23 +1648,24 @@ html, body {
   <div class="card" data-search="pg_restore import cloud sql data">
     <div class="ch ch-step">Step 1.3 — Import Data &amp; Update Connection String</div>
     <div class="cb">
-      <pre class="code-block"><span class="cm"># Upload dump to GCS (Cloud SQL needs GCS source)</span>
-<span class="kg">gsutil</span> cp db-export.dump <span class="vl">gs://myapp-backups/db-export.dump</span>
+      <pre class="code-block"><span class="cm"># ── Option A: gcloud sql import — PLAIN SQL only ───────</span>
+<span class="cm"># Upload the plain-SQL dump to GCS (Cloud SQL imports from GCS)</span>
+<span class="kg">gsutil</span> cp db-export.sql.gz <span class="vl">gs://myapp-backups/db-export.sql.gz</span>
 
-<span class="cm"># Import via Cloud SQL (handles pg_restore internally)</span>
+<span class="cm"># import sql runs psql — accepts .sql / .sql.gz, NOT .dump archives</span>
 <span class="kg">gcloud</span> sql import sql <span class="vl">myapp-db-prod</span> <span class="fl">\</span>
-  gs://myapp-backups/db-export.dump <span class="fl">\</span>
+  gs://myapp-backups/db-export.sql.gz <span class="fl">\</span>
   <span class="fl">--database</span>=<span class="vl">myapp</span>
 
-<span class="cm"># OR: use pg_restore directly via Cloud SQL Auth Proxy
-# Start proxy locally: cloud-sql-proxy PROJECT:REGION:INSTANCE
-pg_restore</span> <span class="fl">-h</span> 127.0.0.1 <span class="fl">-U</span> postgres <span class="fl">-d</span> myapp db-export.dump
+<span class="cm"># ── Option B: pg_restore for the CUSTOM-format .dump ───
+# Start the proxy locally: cloud-sql-proxy PROJECT:REGION:INSTANCE
+pg_restore</span> <span class="fl">-h</span> 127.0.0.1 <span class="fl">-U</span> postgres <span class="fl">--no-owner</span> <span class="fl">-d</span> myapp db-export.dump
 
-<span class="cm"># New DATABASE_URL format for Cloud SQL (private IP)</span>
-<span class="ev">DATABASE_URL</span>=<span class="st">postgresql://postgres:PASSWORD@10.100.x.x/myapp?sslmode=disable</span>
+<span class="cm"># New DATABASE_URL for Cloud SQL — keep TLS ON (sslmode=require)</span>
+<span class="ev">DATABASE_URL</span>=<span class="st">postgresql://postgres:PASSWORD@10.100.x.x/myapp?sslmode=require</span>
 
-<span class="cm"># Store in Secret Manager</span>
-<span class="br">echo</span> <span class="st">"postgresql://postgres:PASSWORD@10.100.x.x/myapp"</span> | <span class="fl">\</span>
+<span class="cm"># Store the SAME value in Secret Manager (printf avoids a trailing newline)</span>
+<span class="br">printf</span> <span class="st">'%s'</span> <span class="st">"postgresql://postgres:PASSWORD@10.100.x.x/myapp?sslmode=require"</span> | <span class="fl">\</span>
   <span class="kg">gcloud</span> secrets create <span class="vl">myapp-prod-DATABASE_URL</span> <span class="fl">--data-file</span>=-</pre>
       <div class="warn-box mt-8">
         <strong>Private IP only:</strong> Memorystore and Cloud SQL are only accessible from within the VPC.
@@ -1667,7 +1682,7 @@ pg_restore</span> <span class="fl">-h</span> 127.0.0.1 <span class="fl">-U</span
      REGION 07 — PHASE 2: CACHE MIGRATION  (1410,3230  1270×1400)
 ════════════════════════════════════════════════════════════════════════ -->
 <div id="r07" class="region r-amber" style="left:1410px;top:3238px;width:1270px;height:1499px;">
-<div class="rh">07 — Phase 2: Heroku Redis → Memorystore</div>
+<div class="rh">07 — Phase 2: Heroku Key-Value Store → Memorystore</div>
 <div class="rb flex flex-col gap-12">
 
   <div class="card" data-search="redis memorystore migration cache">
@@ -1682,9 +1697,9 @@ pg_restore</span> <span class="fl">-h</span> 127.0.0.1 <span class="fl">-U</span
         <div>
           <div class="text-xs" style="color:#FBBC04;font-weight:700;text-transform:uppercase;margin-bottom:6px;">What changes</div>
           <ul style="list-style:none;font-size:13.2px;color:#c9b8e0;">
-            <li class="mb-6">✓ <code class="mono">REDIS_URL</code> → private IP (no <code class="mono">redis://user:pass@host</code>)</li>
+            <li class="mb-6">✓ <code class="mono">REDIS_URL</code> → private IP with the AUTH string as the password</li>
             <li class="mb-6">✓ Must use VPC — no public endpoint</li>
-            <li class="mb-6">✓ AUTH disabled by default (VPC-only security)</li>
+            <li class="mb-6">✓ Enable AUTH (off by default); add TLS for sensitive data</li>
           </ul>
         </div>
         <div>
@@ -1708,7 +1723,11 @@ pg_restore</span> <span class="fl">-h</span> 127.0.0.1 <span class="fl">-U</span
   <span class="fl">--region</span>=us-central1 <span class="fl">\</span>
   <span class="fl">--redis-version</span>=redis_7_0 <span class="fl">\</span>
   <span class="fl">--tier</span>=STANDARD_HA <span class="fl">\</span>
-  <span class="fl">--network</span>=<span class="vl">myapp-vpc</span>
+  <span class="fl">--network</span>=projects/<span class="vl">YOUR_PROJECT_ID</span>/global/networks/<span class="vl">myapp-vpc</span> <span class="fl">\</span>
+  <span class="fl">--enable-auth</span>
+<span class="cm"># AUTH is OFF by default — always enable it. For sensitive data
+# also add --transit-encryption-mode=SERVER_AUTHENTICATION (TLS);
+# that requires the Memorystore server CA in your Redis client.</span>
 
 <span class="cm"># Wait for provisioning (~5 minutes), then get private IP</span>
 <span class="kg">gcloud</span> redis instances describe <span class="vl">myapp-cache-prod</span> <span class="fl">\</span>
@@ -1724,8 +1743,11 @@ pg_restore</span> <span class="fl">-h</span> 127.0.0.1 <span class="fl">-U</span
   <div class="card" data-search="redis url update secret manager">
     <div class="ch ch-step">Step 2.2 — Update REDIS_URL Secret</div>
     <div class="cb">
-      <pre class="code-block"><span class="cm"># Store the new Redis private IP in Secret Manager</span>
-<span class="br">echo</span> <span class="st">"redis://10.0.1.34:6379"</span> | <span class="fl">\</span>
+      <pre class="code-block"><span class="cm"># Fetch the generated AUTH string</span>
+<span class="kg">gcloud</span> redis instances get-auth-string <span class="vl">myapp-cache-prod</span> <span class="fl">--region</span>=us-central1
+
+<span class="cm"># Store REDIS_URL in Secret Manager (AUTH string as the password)</span>
+<span class="br">printf</span> <span class="st">'%s'</span> <span class="st">"redis://:AUTH_STRING@10.0.1.34:6379"</span> | <span class="fl">\</span>
   <span class="kg">gcloud</span> secrets create <span class="vl">myapp-prod-REDIS_URL</span> <span class="fl">--data-file</span>=-
 
 <span class="cm"># Verify: read back the secret value</span>
@@ -1735,9 +1757,10 @@ pg_restore</span> <span class="fl">-h</span> 127.0.0.1 <span class="fl">-U</span
 <span class="cm"># Heroku equivalent:
 # heroku config:get REDIS_URL -a myapp-prod</span></pre>
       <div class="info-box mt-8">
-        <strong>No AUTH password in the URL.</strong> Memorystore on a private VPC doesn't need
-        Redis AUTH by default — the VPC firewall is your security boundary.
-        If your app connects with <code class="mono">redis://user:pass@host</code>, remove the credentials.
+        <strong>Use the AUTH string.</strong> The VPC limits network reach, but Memorystore is
+        unauthenticated unless <code class="mono">--enable-auth</code> is set — anything with VPC access
+        could otherwise read the cache. Put the AUTH string in <code class="mono">REDIS_URL</code> as the
+        password. Enabling TLS additionally requires the Memorystore server CA in your Redis client config.
       </div>
     </div>
   </div>
@@ -1798,7 +1821,7 @@ redis.ping().then(<span class="br">r</span> => {
           <div class="text-xs" style="color:#34A853;font-weight:700;text-transform:uppercase;margin-bottom:6px;">Cloud Logging</div>
           <ul style="list-style:none;font-size:13.2px;color:#c9b8e0;">
             <li class="mb-5">✓ Automatic — zero config on Cloud Run</li>
-            <li class="mb-5">✓ 30-day retention (free tier: 1GB/day)</li>
+            <li class="mb-5">✓ 30-day default retention; 50 GiB/mo ingestion free</li>
             <li class="mb-5">✓ Structured log queries (Logging Query Language)</li>
             <li class="mb-5">✓ Log-based alerting policies</li>
             <li class="mb-5">✓ Export to BigQuery or GCS for analytics</li>
@@ -1812,18 +1835,20 @@ redis.ping().then(<span class="br">r</span> => {
   <div class="card" data-search="pino winston structured logging json">
     <div class="ch ch-step">Step 3.1 — Switch to Structured JSON Logging</div>
     <div class="cb">
-      <div class="text-xs text-muted mb-8">Cloud Logging automatically parses JSON with these reserved field names:</div>
+      <div class="text-xs text-muted mb-8">Cloud Logging parses each <strong>single-line</strong> JSON object on stdout/stderr; these field names are special:</div>
       <pre class="code-block"><span class="cm">// Node.js: Pino logger setup (recommended)</span>
 <span class="br">import</span> pino <span class="br">from</span> <span class="st">'pino'</span>;
 
 <span class="br">export const</span> logger = pino({
   level: <span class="ev">process.env.LOG_LEVEL</span> || <span class="st">'info'</span>,
-  <span class="cm">// GCP Cloud Logging field mappings</span>
-  messageKey: <span class="st">'message'</span>,      <span class="cm">// → jsonPayload.message</span>
-  timestamp: pino.stdTimeFunctions.isoTime,
+  <span class="cm">// Map Pino output → Cloud Logging special fields</span>
+  messageKey: <span class="st">'message'</span>,      <span class="cm">// → jsonPayload.message (shown in summary)</span>
+  <span class="cm">// Emit a "timestamp" field — Cloud Logging reads this as the</span>
+  <span class="cm">// entry time. A plain "time" field is NOT read as the timestamp.</span>
+  timestamp: () => <span class="st">`,"timestamp":"${new Date().toISOString()}"`</span>,
   formatters: {
     level: (label) => ({ severity: label.toUpperCase() })
-    <span class="cm">// Maps pino levels → GCP severity: INFO, WARNING, ERROR</span>
+    <span class="cm">// Maps Pino levels → Cloud Logging severity: INFO, WARNING, ERROR</span>
   }
 });
 
@@ -1907,7 +1932,9 @@ logger.error({ err, requestId }, <span class="st">'Database connection failed'</
   metadata: { contentType: <span class="st">'application/pdf'</span> }
 });
 
-<span class="cm">// Signed URLs (60-minute expiry)</span>
+<span class="cm">// Signed URLs (60-min expiry). On Cloud Run the runtime SA must
+// hold roles/iam.serviceAccountTokenCreator on itself — ADC has no
+// private key, so signing is delegated to the IAM signBlob API.</span>
 <span class="br">const</span> [url] = <span class="br">await</span> bucket.file(<span class="st">'uploads/file.pdf'</span>)
   .getSignedUrl({ action: <span class="st">'read'</span>, expires: Date.now() + 3600000 });</pre>
         </div>
@@ -1929,10 +1956,14 @@ logger.error({ err, requestId }, <span class="st">'Database connection failed'</
   serviceAccount:app-run@YOUR_PROJECT.iam.gserviceaccount.com:objectAdmin <span class="fl">\</span>
   gs://myapp-prod-storage
 
-<span class="cm"># Migrate existing objects from S3 to GCS (cross-cloud copy)</span>
+<span class="cm"># Cross-cloud S3→GCS sync needs the Bucketeer AWS keys in ~/.boto:
+#   [Credentials]
+#   aws_access_key_id     = $BUCKETEER_AWS_ACCESS_KEY_ID
+#   aws_secret_access_key = $BUCKETEER_AWS_SECRET_ACCESS_KEY
+# Then migrate existing objects from S3 to GCS (cross-cloud copy)</span>
 <span class="kg">gsutil</span> <span class="fl">-m</span> rsync <span class="fl">-r</span> <span class="st">s3://old-bucketeer-bucket</span> <span class="st">gs://myapp-prod-storage</span>
 
-<span class="cm"># Verify object count matches</span>
+<span class="cm"># Verify total size matches (du reports bytes, not object count)</span>
 <span class="kg">gsutil</span> du <span class="fl">-s</span> <span class="st">gs://myapp-prod-storage</span></pre>
       <div class="tip-box mt-8">
         <strong>AI tip:</strong> <code class="mono">gsutil rsync</code> is idempotent — run it multiple times safely.
@@ -1974,24 +2005,27 @@ logger.error({ err, requestId }, <span class="st">'Database connection failed'</
   <div class="card" data-search="heroku config export secret manager bulk import script">
     <div class="ch ch-step">Step 5.1 — Bulk Export &amp; Import</div>
     <div class="cb">
-      <pre class="code-block"><span class="cm"># 1. Export all Heroku config vars to a .env file</span>
-<span class="kh">heroku</span> config <span class="fl">-s</span> <span class="fl">--app</span> <span class="vl">myapp-prod</span> > prod.env
-<span class="cm"># prod.env contains: KEY=VALUE lines (one per var)</span>
+      <pre class="code-block"><span class="cm"># 1. Export config vars as JSON — preserves values exactly,</span>
+<span class="cm">#    including '=' signs and multi-line values like PEM keys.</span>
+<span class="kh">heroku</span> config <span class="fl">--json</span> <span class="fl">--app</span> <span class="vl">myapp-prod</span> > prod.config.json
 
-<span class="cm"># 2. Bulk import to Secret Manager (bash loop)</span>
-<span class="br">while</span> IFS=<span class="st">'='</span> <span class="br">read</span> -r key value; <span class="br">do</span>
-  [[ <span class="st">"$key"</span> == <span class="st">"#"</span>* ]] && <span class="br">continue</span>  <span class="cm"># skip comments</span>
-  <span class="br">echo</span> <span class="fl">-n</span> <span class="st">"$value"</span> | <span class="kg">gcloud</span> secrets create <span class="vl">myapp-prod-</span><span class="ev">${key}</span> <span class="fl">\</span>
-    <span class="fl">--data-file</span>=- <span class="fl">--replication-policy</span>=automatic 2>/dev/null || <span class="fl">\</span>
-    <span class="br">echo</span> <span class="fl">-n</span> <span class="st">"$value"</span> | <span class="kg">gcloud</span> secrets versions add <span class="vl">myapp-prod-</span><span class="ev">${key}</span> <span class="fl">--data-file</span>=-
-<span class="br">done</span> < prod.env
+<span class="cm"># 2. Bulk import to Secret Manager — create, or add a version if it exists</span>
+<span class="br">for</span> key <span class="br">in</span> $(jq <span class="fl">-r</span> <span class="st">'keys[]'</span> prod.config.json); <span class="br">do</span>
+  name=<span class="st">"myapp-prod-${key}"</span>
+  value=$(jq <span class="fl">-r</span> <span class="fl">--arg</span> k <span class="st">"$key"</span> <span class="st">'.[$k]'</span> prod.config.json)
+  <span class="br">if</span> <span class="kg">gcloud</span> secrets describe <span class="st">"$name"</span> &>/dev/null; <span class="br">then</span>
+    <span class="br">printf</span> <span class="st">'%s'</span> <span class="st">"$value"</span> | <span class="kg">gcloud</span> secrets versions add <span class="st">"$name"</span> <span class="fl">--data-file</span>=-
+  <span class="br">else</span>
+    <span class="br">printf</span> <span class="st">'%s'</span> <span class="st">"$value"</span> | <span class="kg">gcloud</span> secrets create <span class="st">"$name"</span> <span class="fl">--data-file</span>=- <span class="fl">--replication-policy</span>=automatic
+  <span class="br">fi</span>
+<span class="br">done</span>
 
 <span class="cm"># 3. Read back a secret to verify</span>
 <span class="kg">gcloud</span> secrets versions access latest <span class="fl">\</span>
   <span class="fl">--secret</span>=<span class="vl">myapp-prod-JWT_SECRET</span></pre>
       <div class="warn-box mt-8">
-        <strong>Security:</strong> Delete <code class="mono">prod.env</code> immediately after import.
-        Never commit it to git. Use <code class="mono">shred -u prod.env</code> for secure deletion.
+        <strong>Security:</strong> Delete <code class="mono">prod.config.json</code> immediately after import.
+        Never commit it to git. Use <code class="mono">shred -u prod.config.json</code> for secure deletion.
       </div>
     </div>
   </div>
@@ -1999,15 +2033,12 @@ logger.error({ err, requestId }, <span class="st">'Database connection failed'</
   <div class="card" data-search="cloud run set-secrets inject environment">
     <div class="ch ch-step">Step 5.2 — Inject Secrets into Cloud Run</div>
     <div class="cb">
-      <pre class="code-block"><span class="cm"># Deploy Cloud Run service with secrets injected as env vars</span>
+      <pre class="code-block"><span class="cm"># Deploy Cloud Run service with secrets injected as env vars.
+# Keep the --set-secrets value on ONE line — no spaces between entries.</span>
 <span class="kg">gcloud</span> run deploy <span class="vl">myapp-api-prod</span> <span class="fl">\</span>
   <span class="fl">--image</span>=us-central1-docker.pkg.dev/PROJECT/app-images/myapp:latest <span class="fl">\</span>
   <span class="fl">--region</span>=us-central1 <span class="fl">\</span>
-  <span class="fl">--set-secrets</span>=<span class="fl">\</span>
-    <span class="ev">DATABASE_URL</span>=myapp-prod-DATABASE_URL:latest,<span class="fl">\</span>
-    <span class="ev">REDIS_URL</span>=myapp-prod-REDIS_URL:latest,<span class="fl">\</span>
-    <span class="ev">JWT_SECRET</span>=myapp-prod-JWT_SECRET:latest,<span class="fl">\</span>
-    <span class="ev">SENDGRID_API_KEY</span>=myapp-prod-SENDGRID_API_KEY:latest
+  <span class="fl">--set-secrets</span>=<span class="ev">DATABASE_URL</span>=myapp-prod-DATABASE_URL:latest,<span class="ev">REDIS_URL</span>=myapp-prod-REDIS_URL:latest,<span class="ev">JWT_SECRET</span>=myapp-prod-JWT_SECRET:latest,<span class="ev">SENDGRID_API_KEY</span>=myapp-prod-SENDGRID_API_KEY:latest
 
 <span class="cm"># Heroku equivalent:
 # heroku config:set DATABASE_URL=... -a myapp-prod</span></pre>
@@ -2095,8 +2126,8 @@ sgMail.setApiKey(<span class="ev">process.env.SENDGRID_API_KEY</span>);
         if you switched DNS providers during the migration.
       </div>
       <div class="tip-box mt-8">
-        <strong>Outbound SMTP from Cloud Run:</strong> Cloud Run can send SMTP to port 587 (TLS) without restriction.
-        Port 25 is blocked (GCP policy). SendGrid API (HTTPS) is always preferred over SMTP.
+        <strong>Outbound SMTP from Cloud Run:</strong> Cloud Run can generally send SMTP on ports 587/465 (TLS);
+        port 25 is always blocked by GCP. The SendGrid HTTPS API avoids SMTP egress concerns entirely and is preferred.
       </div>
     </div>
   </div>
@@ -2132,16 +2163,22 @@ sgMail.setApiKey(<span class="ev">process.env.SENDGRID_API_KEY</span>);
 <span class="cm"># ── Stage 2: Production image ────────────────────────</span>
 <span class="kg">FROM</span> node:20-alpine <span class="kg">AS</span> runtime
 <span class="kg">WORKDIR</span> /app
+<span class="kg">ENV</span> <span class="ev">NODE_ENV</span>=production
 
-<span class="cm"># Security: run as non-root user</span>
+<span class="cm"># Security: create a non-root user</span>
 <span class="kg">RUN</span> addgroup -S appgroup && adduser -S appuser -G appgroup
+
+<span class="cm"># Copy with --chown so files belong to the runtime user.
+# COPY runs as root regardless of any USER above it — without
+# --chown, node_modules and the app would be root-owned.</span>
+<span class="kg">COPY</span> <span class="fl">--chown=appuser:appgroup</span> --from=deps /app/node_modules ./node_modules
+<span class="kg">COPY</span> <span class="fl">--chown=appuser:appgroup</span> . .
+
+<span class="cm"># Drop to the non-root user AFTER all COPY steps</span>
 <span class="kg">USER</span> appuser
 
-<span class="kg">COPY</span> --from=deps /app/node_modules ./node_modules
-<span class="kg">COPY</span> . .
-
-<span class="cm"># Cloud Run listens on PORT env var (default 8080)</span>
-<span class="kg">ENV</span> <span class="ev">PORT</span>=8080
+<span class="cm"># Cloud Run injects PORT (default 8080) and routes to it;
+# EXPOSE is informational only. Read process.env.PORT in code.</span>
 <span class="kg">EXPOSE</span> 8080
 
 <span class="cm"># Equivalent to Procfile "web:" line</span>
@@ -2212,9 +2249,10 @@ images:
   <span class="fl">--image</span>=us-central1-docker.pkg.dev/PROJECT/app-images/myapp@sha256:<span class="vl">DIGEST</span> <span class="fl">\</span>
   <span class="fl">--region</span>=us-central1 <span class="fl">\</span>
   <span class="fl">--platform</span>=managed <span class="fl">\</span>
-  <span class="fl">--allow-unauthenticated</span> <span class="fl">\</span>          <span class="cm"># LB handles auth</span>
+  <span class="fl">--allow-unauthenticated</span> <span class="fl">\</span>
+  <span class="fl">--ingress</span>=internal-and-cloud-load-balancing <span class="fl">\</span>  <span class="cm"># only the LB can reach it</span>
   <span class="fl">--service-account</span>=app-run@PROJECT.iam.gserviceaccount.com <span class="fl">\</span>
-  <span class="fl">--vpc-connector</span>=<span class="vl">myapp-vpc-connector</span> <span class="fl">\</span>  <span class="cm"># or --vpc-egress=all-traffic</span>
+  <span class="fl">--network</span>=<span class="vl">myapp-vpc</span> <span class="fl">--subnet</span>=<span class="vl">subnet-run</span> <span class="fl">--vpc-egress</span>=all-traffic <span class="fl">\</span>
   <span class="fl">--min-instances</span>=1 <span class="fl">\</span>                 <span class="cm"># avoid cold starts in prod</span>
   <span class="fl">--max-instances</span>=20 <span class="fl">\</span>
   <span class="fl">--concurrency</span>=80 <span class="fl">\</span>
@@ -2334,7 +2372,7 @@ images:
 <span class="kg">gcloud</span> compute networks vpc-access connectors create <span class="vl">myapp-connector</span> <span class="fl">\</span>
   <span class="fl">--region</span>=us-central1 <span class="fl">\</span>
   <span class="fl">--subnet</span>=<span class="vl">subnet-run</span> <span class="fl">\</span>
-  <span class="fl">--min-instances</span>=2 <span class="fl">--max-instances</span>=3
+  <span class="fl">--min-instances</span>=2 <span class="fl">--max-instances</span>=10
 
 <span class="kg">gcloud</span> run deploy <span class="vl">myapp-api-prod</span> <span class="fl">\</span>
   <span class="fl">--vpc-connector</span>=<span class="vl">myapp-connector</span> ...</pre>
@@ -2349,8 +2387,10 @@ images:
       <div class="card" data-search="cloud nat internet outbound traffic static ip">
         <div class="ch ch-violet">Step 8.4 — Cloud NAT (Outbound Internet from VPC)</div>
         <div class="cb">
-          <pre class="code-block"><span class="cm"># Cloud Run with VPC egress loses direct internet access
-# Cloud NAT restores outbound internet (e.g. for SendGrid HTTPS)</span>
+          <pre class="code-block"><span class="cm"># With --vpc-egress=all-traffic, ALL outbound traffic (including
+# the internet) routes through the VPC — Cloud NAT restores
+# outbound internet access. (--vpc-egress=private-ranges-only
+# keeps direct internet access and needs no NAT.)</span>
 
 <span class="cm"># Create a Cloud Router</span>
 <span class="kg">gcloud</span> compute routers create <span class="vl">myapp-router</span> <span class="fl">\</span>
@@ -2461,7 +2501,7 @@ app.listen(<span class="ev">process.env.PORT</span> || 8080);</pre>
           <tr><td>10-min minimum interval</td><td class="tg">1-minute minimum interval</td></tr>
           <tr><td>No auth / no security</td><td class="tg">OIDC token authentication</td></tr>
           <tr><td>Free (bundled with Heroku)</td><td class="tg">$0.10/job/month (first 3 free)</td></tr>
-          <tr><td>No retry logic</td><td class="tg">Configurable retry count/deadline</td></tr>
+          <tr><td>No configurable retry</td><td class="tg">Configurable retry count/deadline</td></tr>
           <tr><td>No execution history</td><td class="tg">Full execution history in Cloud Logging</td></tr>
         </table>
       </div>
@@ -2488,7 +2528,7 @@ app.listen(<span class="ev">process.env.PORT</span> || 8080);</pre>
           <li class="step-item"><div class="step-num gcp">2</div><div class="step-text"><strong>Provision GCP HTTPS LB:</strong> Create the Global HTTPS Load Balancer with your custom domain and Google-managed SSL cert before cutover.</div></li>
           <li class="step-item"><div class="step-num gcp">3</div><div class="step-text"><strong>Test via /etc/hosts:</strong> Add <code>GCP_LB_IP yourdomain.com</code> to your local hosts file and verify the app works end-to-end on GCP.</div></li>
           <li class="step-item"><div class="step-num gcp">4</div><div class="step-text"><strong>Dual-write database:</strong> During cutover window (15–30 min), configure the app to write to both Heroku Postgres and Cloud SQL. Ensures zero data loss.</div></li>
-          <li class="step-item"><div class="step-num gcp">5</div><div class="step-text"><strong>Switch DNS A record:</strong> Change domain's A record from Heroku IP to GCP LB IP. With 60s TTL, propagation is near-instant.</div></li>
+          <li class="step-item"><div class="step-num gcp">5</div><div class="step-text"><strong>Switch the DNS record:</strong> Replace the domain's existing CNAME (→ <code>herokudns.com</code>) with an A record pointing to the GCP LB IP. With 60s TTL, propagation is near-instant.</div></li>
           <li class="step-item"><div class="step-num gcp">6</div><div class="step-text"><strong>Monitor for 30 minutes:</strong> Watch Cloud Logging for errors. Keep Heroku app running for 24h rollback window.</div></li>
           <li class="step-item"><div class="step-num gcp">7</div><div class="step-text"><strong>Remove Heroku custom domain:</strong> Only after confirming GCP is healthy and stable.</div></li>
         </ol>
@@ -2498,8 +2538,9 @@ app.listen(<span class="ev">process.env.PORT</span> || 8080);</pre>
     <div class="card" data-search="heroku domains gcloud load balancer certificate ssl">
       <div class="ch ch-step">DNS Cutover Commands</div>
       <div class="cb">
-        <pre class="code-block"><span class="cm"># ── HEROKU SIDE: Remove custom domain ──────────────</span>
-<span class="cm"># Get Heroku's IP for your domain (for reference)</span>
+        <pre class="code-block"><span class="cm"># ── HEROKU SIDE: note the current domain config ────</span>
+<span class="cm"># Heroku custom domains use a CNAME to a herokudns.com target —
+# there is no stable Heroku IP. List the current CNAME target:</span>
 <span class="kh">heroku</span> domains <span class="fl">--app</span> <span class="vl">myapp-prod</span>
 
 <span class="cm"># ── GCP SIDE: Set up HTTPS Load Balancer ───────────</span>
@@ -2513,9 +2554,10 @@ app.listen(<span class="ev">process.env.PORT</span> || 8080);</pre>
   <span class="fl">--domains</span>=<span class="st">"api.yourdomain.com,www.yourdomain.com"</span> <span class="fl">\</span>
   <span class="fl">--global</span>
 
-<span class="cm"># ── DNS: Change A record at your DNS provider ───────
-# Before: api.yourdomain.com  A  54.x.x.x  (Heroku router IP)
-# After:  api.yourdomain.com  A  34.111.x.x  (GCP LB IP)
+<span class="cm"># ── DNS: Change the record at your DNS provider ─────
+# Before: api.yourdomain.com  CNAME  tokyo-1234.herokudns.com
+# After:  api.yourdomain.com  A      34.111.x.x  (GCP LB IP)
+# The record TYPE changes (CNAME → A) — delete the old CNAME.
 # TTL: 60 (set 48h before cutover)</span>
 
 <span class="cm"># ── VERIFY: cert provisioning (takes 10–60 min) ─────</span>
@@ -2524,8 +2566,8 @@ app.listen(<span class="ev">process.env.PORT</span> || 8080);</pre>
 <span class="cm"># ACTIVE = cert issued, TLS working</span>
 
 <span class="cm"># ── ROLLBACK: point DNS back to Heroku if needed ────
-# Restore old DNS A record (old Heroku IP)
-# heroku domains:add api.yourdomain.com -a myapp-prod</span></pre>
+# Recreate the CNAME → the herokudns.com target noted above.
+# Keep the Heroku app + domain in place until cutover is verified.</span></pre>
         <div class="warn-box mt-8">
           <strong>FIDO2 / WebAuthn continuity:</strong> If your app uses FIDO2 passkeys or WebAuthn,
           the Relying Party ID (rpId) is bound to the domain. As long as your custom domain
@@ -2543,7 +2585,7 @@ app.listen(<span class="ev">process.env.PORT</span> || 8080);</pre>
      REGION 16 — CLI EQUIVALENTS  (40,8470  4020×950)
 ════════════════════════════════════════════════════════════════════════ -->
 <div id="r16" class="region r-slate" style="left:40px;top:8789px;width:1970px;height:930px;">
-<div class="rh">16 — CLI Equivalents: heroku CLI ↔ gcloud CLI — 32 Command Pairs</div>
+<div class="rh">16 — CLI Equivalents: heroku CLI ↔ gcloud CLI — 30 Command Pairs</div>
 <div class="rb">
 
   <div class="mb-10 text-sm" style="color:#9b8ab0;">
@@ -2635,13 +2677,13 @@ app.listen(<span class="ev">process.env.PORT</span> || 8080);</pre>
           <tr class="cat-row"><td colspan="3">── Restart &amp; Run ──</td></tr>
           <tr>
             <td>Restart all dynos</td>
-            <td class="heroku-cmd"><span class="cli-code"><span class="kh">heroku</span> dyno:restart <span class="fl">-a</span> <span class="vl">myapp</span></span></td>
+            <td class="heroku-cmd"><span class="cli-code"><span class="kh">heroku</span> ps:restart <span class="fl">-a</span> <span class="vl">myapp</span></span></td>
             <td class="gcloud-cmd"><span class="cli-code"><span class="cm"># Force new revision by updating an env var</span><br><span class="kg">gcloud</span> run services update <span class="vl">myapp-api</span> <span class="fl">--set-env-vars</span> <span class="vl">RESTART_TS</span>=$(date +%s)</span></td>
           </tr>
           <tr>
             <td>Run one-off command</td>
             <td class="heroku-cmd"><span class="cli-code"><span class="kh">heroku</span> run node <span class="fl">-e</span> <span class="st">"..."</span> <span class="fl">-a</span> <span class="vl">myapp</span></span></td>
-            <td class="gcloud-cmd"><span class="cli-code"><span class="kg">gcloud</span> run jobs create <span class="vl">one-off</span> <span class="fl">--image</span>=... <span class="fl">--command</span>=node <span class="fl">--args</span>=script.js<br><span class="kg">gcloud</span> run jobs execute <span class="vl">one-off</span></span></td>
+            <td class="gcloud-cmd"><span class="cli-code"><span class="kg">gcloud</span> run jobs create <span class="vl">one-off</span> <span class="fl">--image</span>=... <span class="fl">--region</span>=us-central1 <span class="fl">--command</span>=node <span class="fl">--args</span>=script.js<br><span class="kg">gcloud</span> run jobs execute <span class="vl">one-off</span> <span class="fl">--region</span>=us-central1</span></td>
           </tr>
         </tbody>
       </table>
@@ -2703,7 +2745,7 @@ app.listen(<span class="ev">process.env.PORT</span> || 8080);</pre>
           <tr>
             <td>Add custom domain</td>
             <td class="heroku-cmd"><span class="cli-code"><span class="kh">heroku</span> domains:add api.yourdomain.com <span class="fl">-a</span> <span class="vl">myapp</span></span></td>
-            <td class="gcloud-cmd"><span class="cli-code"><span class="kg">gcloud</span> compute ssl-certificates create <span class="vl">cert</span> <span class="fl">--domains</span>=api.yourdomain.com</span></td>
+            <td class="gcloud-cmd"><span class="cli-code"><span class="kg">gcloud</span> compute ssl-certificates create <span class="vl">cert</span> <span class="fl">--domains</span>=api.yourdomain.com <span class="fl">--global</span></span></td>
           </tr>
           <tr>
             <td>List domains</td>
@@ -2723,7 +2765,7 @@ app.listen(<span class="ev">process.env.PORT</span> || 8080);</pre>
           </tr>
           <tr>
             <td>View metrics</td>
-            <td class="heroku-cmd"><span class="cli-code"><span class="kh">heroku</span> metrics <span class="fl">-a</span> <span class="vl">myapp</span></span></td>
+            <td class="heroku-cmd"><span class="cli-code"><span class="cm"># Heroku Dashboard → app → Metrics tab (no CLI)</span></span></td>
             <td class="gcloud-cmd"><span class="cli-code"><span class="kg">gcloud</span> monitoring dashboards list <span class="cm"># or use Cloud Console UI</span></span></td>
           </tr>
           <tr class="cat-row"><td colspan="3">── Maintenance &amp; Open ──</td></tr>
@@ -2803,7 +2845,7 @@ app.listen(<span class="ev">process.env.PORT</span> || 8080);</pre>
         <div class="ai-dialog">
           <div class="ai-prompt-bar">
             <div class="ai-who">You</div>
-            <div class="ai-text">"I have 45 Heroku config vars in prod.env. Write a bash script to bulk-import all of them to GCP Secret Manager using the naming convention 'myapp-prod-KEY'. Handle existing secrets gracefully (add a new version instead of failing)."</div>
+            <div class="ai-text">"I have 45 Heroku config vars exported via heroku config --json. Write a bash script to bulk-import all of them to GCP Secret Manager using the naming convention 'myapp-prod-KEY'. Handle existing secrets gracefully (add a new version instead of failing)."</div>
           </div>
           <div class="ai-resp">
             <div class="ai-who">Claude Code</div>
@@ -2812,25 +2854,23 @@ app.listen(<span class="ev">process.env.PORT</span> || 8080);</pre>
 # Claude-generated: bulk Secret Manager import</span>
 set -euo pipefail
 
-ENV_FILE=<span class="st">"prod.env"</span>
-PROJECT=<span class="st">"your-project-id"</span>
+CONFIG=<span class="st">"prod.config.json"</span>   <span class="cm"># heroku config --json output</span>
 PREFIX=<span class="st">"myapp-prod"</span>
 
-<span class="br">while</span> IFS=<span class="st">'='</span> <span class="br">read</span> -r key rest; <span class="br">do</span>
-  [[ <span class="st">"$key"</span> =~ ^# ]] &amp;&amp; <span class="br">continue</span>
-  [[ -z <span class="st">"$key"</span> ]]   &amp;&amp; <span class="br">continue</span>
-  value=<span class="st">"${rest}"</span>
-  secret_name=<span class="st">"${PREFIX}-${key}"</span>
-  <span class="br">if</span> <span class="kg">gcloud</span> secrets describe <span class="st">"$secret_name"</span> <span class="fl">--project</span>=<span class="st">"$PROJECT"</span> &amp;>/dev/null; <span class="br">then</span>
+<span class="cm"># JSON preserves values exactly — handles '=' and multi-line PEM keys</span>
+<span class="br">for</span> key <span class="br">in</span> $(jq -r <span class="st">'keys[]'</span> <span class="st">"$CONFIG"</span>); <span class="br">do</span>
+  name=<span class="st">"${PREFIX}-${key}"</span>
+  value=$(jq -r <span class="fl">--arg</span> k <span class="st">"$key"</span> <span class="st">'.[$k]'</span> <span class="st">"$CONFIG"</span>)
+  <span class="br">if</span> <span class="kg">gcloud</span> secrets describe <span class="st">"$name"</span> &amp;>/dev/null; <span class="br">then</span>
     <span class="cm"># Secret exists: add new version</span>
-    printf <span class="st">'%s'</span> <span class="st">"$value"</span> | <span class="kg">gcloud</span> secrets versions add <span class="st">"$secret_name"</span> <span class="fl">--data-file</span>=-
+    printf <span class="st">'%s'</span> <span class="st">"$value"</span> | <span class="kg">gcloud</span> secrets versions add <span class="st">"$name"</span> <span class="fl">--data-file</span>=-
   <span class="br">else</span>
     <span class="cm"># New secret: create</span>
-    printf <span class="st">'%s'</span> <span class="st">"$value"</span> | <span class="kg">gcloud</span> secrets create <span class="st">"$secret_name"</span> <span class="fl">--data-file</span>=- <span class="fl">--replication-policy</span>=automatic
+    printf <span class="st">'%s'</span> <span class="st">"$value"</span> | <span class="kg">gcloud</span> secrets create <span class="st">"$name"</span> <span class="fl">--data-file</span>=- <span class="fl">--replication-policy</span>=automatic
   <span class="br">fi</span>
-  <span class="ok">echo "✓ ${secret_name}"</span>
-<span class="br">done</span> &lt; <span class="st">"$ENV_FILE"</span>
-printf <span class="st">'%s'</span> <span class="st">""</span> &gt; <span class="st">"$ENV_FILE"</span>  <span class="cm"># zero out file after import</span></pre>
+  <span class="ok">echo "✓ ${name}"</span>
+<span class="br">done</span>
+<span class="cm"># When done, securely delete the source: shred -u "$CONFIG"</span></pre>
             </div>
           </div>
         </div>
@@ -2888,7 +2928,7 @@ printf <span class="st">'%s'</span> <span class="st">""</span> &gt; <span class=
               <div class="text-xs text-muted mb-6">Claude generates a complete CI/CD config covering:</div>
               <ul style="list-style:none;font-size:12.7px;color:#b0c8a8;">
                 <li class="mb-5">✓ Test step (<code class="mono">npm ci &amp;&amp; npm test</code>) before any deploy</li>
-                <li class="mb-5">✓ Docker build with <code class="mono">$COMMIT_SHA</code> tag + <code class="mono">latest</code></li>
+                <li class="mb-5">✓ Docker build tagged with the immutable <code class="mono">$COMMIT_SHA</code></li>
                 <li class="mb-5">✓ Push to Artifact Registry</li>
                 <li class="mb-5">✓ Auto-deploy api + workers services to dev environment</li>
                 <li class="mb-5">✓ Promotion script for staging/prod (image digest based)</li>
@@ -2983,11 +3023,12 @@ printf <span class="st">'%s'</span> <span class="st">""</span> &gt; <span class=
           <tr><td>Phase 3: Logging</td><td class="score-hi">1 hour</td><td class="tg score-hi">15 min</td><td>Pino config + LQL query examples</td></tr>
           <tr><td>Phase 4: Storage (GCS)</td><td class="score-md">2–4 hours</td><td class="tg score-hi">45 min</td><td>AI generates SDK conversion + rsync commands</td></tr>
           <tr><td>Phase 5: Secrets</td><td class="score-md">2–3 hours</td><td class="tg score-hi">30 min</td><td>Bulk import script generated instantly</td></tr>
+          <tr><td>Phase 6: Email</td><td class="score-hi">30 min</td><td class="tg score-hi">10 min</td><td>SendGrid unchanged — store key in Secret Manager</td></tr>
           <tr><td>Phase 7: Containers</td><td class="score-md">3–5 hours</td><td class="tg score-hi">45 min</td><td>Dockerfile + cloudbuild.yaml generated</td></tr>
           <tr><td>Phase 8: VPC/Networking</td><td class="score-lo">8–16 hours</td><td class="tg score-hi">1–2 hours</td><td>Most complex; AI biggest value-add here</td></tr>
           <tr><td>Phase 9: Scheduler</td><td class="score-md">2–4 hours</td><td class="tg score-hi">30 min</td><td>Bulk job creation from CSV/table</td></tr>
           <tr><td>Phase 10: DNS Cutover</td><td class="score-md">1–2 hours</td><td class="tg score-hi">30 min</td><td>Checklist + cert provisioning commands</td></tr>
-          <tr><td class="bold">Total</td><td class="score-lo bold">~25–45 hours</td><td class="tg score-hi bold">~6–8 hours</td><td class="text-green bold">~80% time reduction</td></tr>
+          <tr><td class="bold">Total</td><td class="score-lo bold">~25–44 hours</td><td class="tg score-hi bold">~6–7 hours</td><td class="text-green bold">~75–85% time reduction</td></tr>
         </table>
       </div>
     </div>
@@ -3134,7 +3175,7 @@ printf <span class="st">'%s'</span> <span class="st">""</span> &gt; <span class=
         <div class="con mb-6 text-sm">VPC peering or Trusted IP Ranges are enforced by security policy</div>
         <div class="con mb-6 text-sm">Identity Federation (SAML SSO) is mandated by corporate IT</div>
         <div class="tip-box mt-8">
-          <strong>Simple path:</strong> If all checkmarks pass above, your migration may be as simple as a support ticket + <code class="mono">heroku apps:transfer</code> commands.
+          <strong>Simple path:</strong> If all checkmarks pass above, your migration may be as simple as an in-place downgrade (a support request) — or, at most, moving Common Runtime apps to a new Team with <code class="mono">heroku apps:transfer</code>.
         </div>
       </div>
     </div>
@@ -3146,16 +3187,16 @@ printf <span class="st">'%s'</span> <span class="st">""</span> &gt; <span class=
         <table class="tbl">
           <tr><th>Dimension</th><th class="th">Enterprise</th><th class="tg">Teams</th></tr>
           <tr><td class="cf">Payment model</td><td class="th">Prepaid annual contract</td><td class="tg">Post-paid monthly (credit card)</td></tr>
-          <tr><td class="cf">Platform fee</td><td class="th score-lo">~$1,000+/mo base</td><td class="tg score-hi">$0 — pay per resource only</td></tr>
-          <tr><td class="cf">Private Spaces</td><td class="th">$1,000+/mo per space</td><td class="tg">N/A (Common Runtime only)</td></tr>
+          <tr><td class="cf">Platform fee</td><td class="th">Custom contract (may include an annual minimum)</td><td class="tg score-hi">None — pay per resource only</td></tr>
+          <tr><td class="cf">Private Spaces</td><td class="th">Per-space charge (contract pricing)</td><td class="tg">N/A (Common Runtime only)</td></tr>
           <tr><td class="cf">Dyno pricing</td><td class="th">Same as list</td><td class="tg">Same as list — no change</td></tr>
           <tr><td class="cf">Add-on pricing</td><td class="th">Same as list</td><td class="tg">Same as list — no change</td></tr>
-          <tr><td class="cf">Heroku CI</td><td class="th">Included</td><td class="tg">$10/mo per pipeline</td></tr>
+          <tr><td class="cf">Heroku CI</td><td class="th">Included</td><td class="tg">Included — pay only for test-run dyno time</td></tr>
           <tr><td class="cf">Commitment</td><td class="th">Annual (early termination fees)</td><td class="tg">None — cancel anytime</td></tr>
           <tr><td class="cf">Support</td><td class="th">Premier / dedicated CSM</td><td class="tg">Standard ticket-based</td></tr>
         </table>
         <div class="info-box mt-8">
-          <strong>Break-even rule:</strong> If your actual resource usage is less than your annual contract divided by 12, Teams costs less. The platform fee alone ($12K+/year) is pure savings on Teams.
+          <strong>Break-even rule:</strong> Enterprise pricing is custom-negotiated and may carry an annual minimum commitment. If your actual resource usage is less than your effective Enterprise spend, Teams costs less — and Teams adds no platform or membership fee on top of resource usage.
         </div>
       </div>
     </div>
@@ -3166,10 +3207,10 @@ printf <span class="st">'%s'</span> <span class="st">""</span> &gt; <span class=
       <div class="cb">
         <div class="text-xs" style="color:#34A853;font-weight:700;text-transform:uppercase;margin-bottom:6px;">What you keep on Teams</div>
         <ul style="list-style:none;font-size:13.2px;color:#c9b8e0;">
-          <li class="mb-5">✓ Pipelines with Review Apps and CI ($10/mo extra)</li>
+          <li class="mb-5">✓ Pipelines with Review Apps and Heroku CI (included)</li>
           <li class="mb-5">✓ Team-level access control (admin, member, viewer)</li>
           <li class="mb-5">✓ Automated Certificate Management (ACM/SSL)</li>
-          <li class="mb-5">✓ All dyno types (Eco through Performance-L)</li>
+          <li class="mb-5">✓ All dyno tiers — Eco, Basic, Standard, and Performance</li>
           <li class="mb-5">✓ All standard add-ons (Postgres, Redis, etc.)</li>
           <li class="mb-5">✓ GitHub/GitLab integration and auto-deploy</li>
           <li class="mb-5">✓ Log drains, custom domains, heroku CLI</li>
@@ -3254,12 +3295,12 @@ printf <span class="st">'%s'</span> <span class="st">""</span> &gt; <span class=
         <div class="text-sm text-muted mb-8">Flag any app that uses Enterprise-only features:</div>
         <table class="tbl">
           <tr><th>Blocker</th><th>How to Detect</th><th>Severity</th></tr>
-          <tr><td class="cf">Private Spaces</td><td><code class="mono">heroku spaces</code> — any apps listed here</td><td><span class="badge b-complex">Hard</span></td></tr>
+          <tr><td class="cf">Private Spaces</td><td><code class="mono">heroku spaces</code>, then <code class="mono">heroku apps --space &lt;name&gt;</code></td><td><span class="badge b-complex">Hard</span></td></tr>
           <tr><td class="cf">Shield Postgres/Redis</td><td><code class="mono">heroku addons</code> — plan contains "shield"</td><td><span class="badge b-complex">Hard</span></td></tr>
           <tr><td class="cf">Heroku Connect</td><td><code class="mono">heroku addons</code> — type is "herokuconnect"</td><td><span class="badge b-moderate">Medium</span></td></tr>
-          <tr><td class="cf">Internal Routing</td><td><code class="mono">heroku features -a &lt;app&gt;</code> — check http-sni</td><td><span class="badge b-complex">Hard</span></td></tr>
+          <tr><td class="cf">Internal Routing</td><td><code class="mono">heroku apps:info -a &lt;app&gt; --json</code> — check <code class="mono">internal_routing</code></td><td><span class="badge b-complex">Hard</span></td></tr>
           <tr><td class="cf">SSO / SAML</td><td>Dashboard → Team Settings → Identity Provider</td><td><span class="badge b-moderate">Medium</span></td></tr>
-          <tr><td class="cf">Trusted IPs</td><td><code class="mono">heroku trusted-ips -s &lt;space&gt;</code></td><td><span class="badge b-moderate">Medium</span></td></tr>
+          <tr><td class="cf">Trusted IPs</td><td><code class="mono">heroku trusted-ips --space &lt;space&gt;</code></td><td><span class="badge b-moderate">Medium</span></td></tr>
         </table>
         <div class="warn-box mt-8">
           <strong>Hard blockers</strong> require architectural changes (see refactoring cards below). <strong>Medium blockers</strong> require workarounds but don't prevent migration.
@@ -3286,7 +3327,7 @@ printf <span class="st">'%s'</span> <span class="st">""</span> &gt; <span class=
         <div class="mb-10" style="font-size:12.1px;font-weight:700;color:#FBBC04;text-transform:uppercase;letter-spacing:.08em;">Path B: New Team + Fork/Clone (Self-Service)</div>
         <div class="text-sm text-muted mb-6">Create a fresh Teams account and migrate apps via CLI. Required if you have apps in Private Spaces (they cannot be transferred out) or if Heroku support cannot do an in-place conversion.</div>
         <ol class="steps">
-          <li class="step-item"><div class="step-num">1</div><div class="step-text"><strong>Create new Teams account:</strong> <code>heroku teams:create &lt;name&gt;</code></div></li>
+          <li class="step-item"><div class="step-num">1</div><div class="step-text"><strong>Create the new Team:</strong> from the Heroku Dashboard (account menu → Create Team) — there is no <code>teams:create</code> CLI command. Then target it with the <code>--team</code> flag.</div></li>
           <li class="step-item"><div class="step-num">2</div><div class="step-text"><strong>Refactor Enterprise-only deps:</strong> Replace internal routing, Trusted IPs, Heroku Connect (see cards below)</div></li>
           <li class="step-item"><div class="step-num">3</div><div class="step-text"><strong>Transfer or fork apps:</strong> Common Runtime apps can <code>heroku apps:transfer</code>; Private Space apps must be recreated (see Region 20)</div></li>
           <li class="step-item"><div class="step-num">4</div><div class="step-text"><strong>Migrate data:</strong> <code>pg:backups:capture</code> + <code>pg:backups:restore</code>, rebuild Redis, re-create scheduler jobs</div></li>
@@ -3326,7 +3367,7 @@ printf <span class="st">'%s'</span> <span class="st">""</span> &gt; <span class=
     <div class="card" data-search="heroku connect replace salesforce api rest bulk cdc mulesoft">
       <div class="ch ch-step">Refactor: Replace Heroku Connect</div>
       <div class="cb">
-        <div class="text-sm text-muted mb-8">Heroku Connect is Enterprise-only. Replacement options:</div>
+        <div class="text-sm text-muted mb-8">Heroku Connect is a separate add-on (common in Enterprise deployments). It can run on Teams too — but if you choose to drop it, here are replacement options:</div>
         <table class="tbl">
           <tr><th>Option</th><th>Best For</th><th>Effort</th></tr>
           <tr><td class="cf">Salesforce REST API</td><td>Low-volume, simple CRUD sync</td><td><span class="badge b-simple">Low</span></td></tr>
@@ -3358,7 +3399,7 @@ printf <span class="st">'%s'</span> <span class="st">""</span> &gt; <span class=
         <hr class="divider">
         <div class="text-xs" style="color:#FBBC04;font-weight:700;text-transform:uppercase;margin-bottom:6px;">Replacing SSO / Identity Federation</div>
         <ul style="list-style:none;font-size:13.2px;color:#c9b8e0;">
-          <li class="mb-5">✓ Heroku native auth with mandatory MFA for all team members</li>
+          <li class="mb-5">✓ Require every team member to enable MFA (Teams can't enforce it centrally)</li>
           <li class="mb-5">✓ Manage access via <code class="mono">heroku members:add/remove</code></li>
           <li class="mb-5">✓ Use GitHub team-based access if using GitHub deploys</li>
         </ul>
@@ -3401,7 +3442,7 @@ printf <span class="st">'%s'</span> <span class="st">""</span> &gt; <span class=
   <span class="ok">echo "✓ Transferred $app"</span>
 <span class="br">done</span></pre>
         <div class="tip-box mt-8">
-          <strong>What transfers with the app:</strong> All config vars, add-ons, custom domains, SSL certs, collaborators, and git repo. The app stays running with zero downtime during transfer.
+          <strong>What transfers with the app:</strong> All config vars, add-ons, custom domains, SSL certs, collaborators, and git repo. Billing for dynos and add-ons moves to the new team, and you must be an admin of the destination team. The app stays running with zero downtime during transfer.
         </div>
       </div>
     </div>
@@ -3410,18 +3451,21 @@ printf <span class="st">'%s'</span> <span class="st">""</span> &gt; <span class=
     <div class="card" data-search="heroku apps fork recreate private space common runtime rebuild">
       <div class="ch ch-amber">Option B — Fork &amp; Recreate <span class="badge b-moderate" style="margin-left:auto;">Moderate</span></div>
       <div class="cb">
-        <div class="text-sm text-muted mb-8">Required for apps currently in Private Spaces (cannot be transferred out):</div>
-        <pre class="code-block"><span class="cm"># Create new app in Teams (Common Runtime)</span>
+        <div class="text-sm text-muted mb-8">Required for apps currently in Private Spaces — they can't be moved into the Common Runtime, so they must be recreated:</div>
+        <pre class="code-block"><span class="cm"># Create new app in Teams (Common Runtime — region is us or eu only)</span>
 <span class="kh">heroku</span> apps:create <span class="vl">&lt;app-name&gt;-new</span> <span class="fl">--team</span> <span class="vl">&lt;new-team&gt;</span> <span class="fl">--region</span> us
 
 <span class="cm"># Set buildpacks</span>
 <span class="kh">heroku</span> buildpacks:set <span class="vl">heroku/nodejs</span> <span class="fl">-a</span> <span class="vl">&lt;app-name&gt;-new</span>
 
-<span class="cm"># Copy config vars from old → new</span>
-<span class="kh">heroku</span> config <span class="fl">-a</span> <span class="vl">&lt;app-name&gt;</span> <span class="fl">--shell</span> | \
-  <span class="kh">heroku</span> config:set <span class="fl">-a</span> <span class="vl">&lt;app-name&gt;-new</span>
+<span class="cm"># Copy config vars old → new. config:set takes KEY=VALUE args,
+# not stdin — use command substitution. Skip HEROKU_*/add-on vars;
+# those are re-created when add-ons are provisioned. For values
+# containing spaces, set those individually.</span>
+<span class="kh">heroku</span> config:set <span class="fl">-a</span> <span class="vl">&lt;app-name&gt;-new</span> <span class="fl">\</span>
+  $(<span class="kh">heroku</span> config <span class="fl">-s</span> <span class="fl">-a</span> <span class="vl">&lt;app-name&gt;</span> | <span class="br">grep</span> <span class="fl">-v</span> <span class="st">'^HEROKU_'</span>)
 
-<span class="cm"># Provision equivalent add-ons</span>
+<span class="cm"># Provision equivalent add-ons (match the source plan tier)</span>
 <span class="kh">heroku</span> addons:create <span class="vl">heroku-postgresql:essential-0</span> <span class="fl">-a</span> <span class="vl">&lt;app-name&gt;-new</span>
 <span class="kh">heroku</span> addons:create <span class="vl">heroku-redis:mini</span> <span class="fl">-a</span> <span class="vl">&lt;app-name&gt;-new</span>
 
@@ -3445,10 +3489,12 @@ printf <span class="st">'%s'</span> <span class="st">""</span> &gt; <span class=
         <pre class="code-block"><span class="cm"># Capture backup from source app</span>
 <span class="kh">heroku</span> pg:backups:capture <span class="fl">-a</span> <span class="vl">&lt;app-name&gt;</span>
 
-<span class="cm"># Get the signed backup URL</span>
+<span class="cm"># Get the signed backup URL — it is short-lived, so run the
+# restore promptly after fetching it</span>
 <span class="kh">heroku</span> pg:backups:url <span class="fl">-a</span> <span class="vl">&lt;app-name&gt;</span>
 
-<span class="cm"># Restore into new app's database</span>
+<span class="cm"># Restore into new app's database (target should match the source
+# Postgres major version)</span>
 <span class="kh">heroku</span> pg:backups:restore <span class="st">'&lt;backup-url&gt;'</span> \
   DATABASE_URL <span class="fl">-a</span> <span class="vl">&lt;app-name&gt;-new</span> <span class="fl">--confirm</span> <span class="vl">&lt;app-name&gt;-new</span>
 
@@ -3492,8 +3538,8 @@ printf <span class="st">'%s'</span> <span class="st">""</span> &gt; <span class=
 <span class="kh">heroku</span> pipelines:add <span class="vl">&lt;pipeline&gt;</span> <span class="fl">-a</span> <span class="vl">&lt;app&gt;-staging</span> <span class="fl">--stage</span> staging
 <span class="kh">heroku</span> pipelines:add <span class="vl">&lt;pipeline&gt;</span> <span class="fl">-a</span> <span class="vl">&lt;app&gt;-new</span> <span class="fl">--stage</span> production
 
-<span class="cm"># Re-enable Review Apps from Pipeline Dashboard
-# Re-enable CI ($10/mo per pipeline on Teams)</span></pre>
+<span class="cm"># Re-enable Review Apps from the Pipeline Dashboard
+# Re-enable Heroku CI (included — pay only for test-run dyno time)</span></pre>
         <div class="warn-box mt-8">
           <strong>GitHub integration:</strong> Must be re-authorized per team. Go to Dashboard → Team Settings → connect GitHub.
         </div>
@@ -3504,7 +3550,7 @@ printf <span class="st">'%s'</span> <span class="st">""</span> &gt; <span class=
     <div class="card" data-search="heroku tls ssl certificate domain acm dns cname transfer custom cert renewal">
       <div class="ch ch-violet">🔒 TLS, Domains &amp; Certificate Management</div>
       <div class="cb">
-        <div class="text-xs" style="color:#34A853;font-weight:700;text-transform:uppercase;margin-bottom:6px;">Path A (transfer) — what happens automatically</div>
+        <div class="text-xs" style="color:#34A853;font-weight:700;text-transform:uppercase;margin-bottom:6px;">Option A (direct transfer) — what happens automatically</div>
         <ul style="list-style:none;font-size:13.2px;color:#c9b8e0;">
           <li class="mb-5">✓ Custom domains stay attached — no DNS change needed</li>
           <li class="mb-5">✓ ACM certificates remain valid and continue auto-renewing</li>
@@ -3512,7 +3558,7 @@ printf <span class="st">'%s'</span> <span class="st">""</span> &gt; <span class=
           <li class="mb-5">✓ SNI routing continues uninterrupted</li>
         </ul>
         <hr class="divider">
-        <div class="text-xs" style="color:#FBBC04;font-weight:700;text-transform:uppercase;margin-bottom:6px;">Path B (fork/recreate) — manual steps required</div>
+        <div class="text-xs" style="color:#FBBC04;font-weight:700;text-transform:uppercase;margin-bottom:6px;">Option B (fork/recreate) — manual steps required</div>
         <pre class="code-block"><span class="cm"># Add custom domain to new app</span>
 <span class="kh">heroku</span> domains:add <span class="vl">api.example.com</span> <span class="fl">-a</span> <span class="vl">&lt;app-name&gt;-new</span>
 
@@ -3520,9 +3566,12 @@ printf <span class="st">'%s'</span> <span class="st">""</span> &gt; <span class=
 <span class="kh">heroku</span> domains <span class="fl">-a</span> <span class="vl">&lt;app-name&gt;-new</span>
 <span class="cm"># → api.example.com  CNAME  &lt;new-target&gt;.herokudns.com</span>
 
-<span class="cm"># Update CNAME at your DNS provider to new target
-# ACM will auto-provision a new cert once DNS propagates
-# (takes 5–45 min depending on provider TTL)</span>
+<span class="cm"># Enable ACM on the new app (a forked app does not inherit it)</span>
+<span class="kh">heroku</span> certs:auto:enable <span class="fl">-a</span> <span class="vl">&lt;app-name&gt;-new</span>
+
+<span class="cm"># Update CNAME at your DNS provider to the new target.
+# ACM auto-provisions a cert once DNS propagates
+# (takes 5–45 min depending on provider TTL).</span>
 
 <span class="cm"># Verify certificate status</span>
 <span class="kh">heroku</span> certs:auto <span class="fl">-a</span> <span class="vl">&lt;app-name&gt;-new</span>
@@ -3531,10 +3580,10 @@ printf <span class="st">'%s'</span> <span class="st">""</span> &gt; <span class=
 <span class="cm"># Remove domain from old app (only after new cert is active!)</span>
 <span class="kh">heroku</span> domains:remove <span class="vl">api.example.com</span> <span class="fl">-a</span> <span class="vl">&lt;app-name&gt;</span></pre>
         <div class="warn-box mt-8">
-          <strong>Cert gap risk (Path B):</strong> There is a brief window where the new app's ACM cert is pending while DNS propagates. To avoid TLS errors during this window: <strong>lower DNS TTL to 60s 48h before cutover</strong>, and do not remove the domain from the old app until <code class="mono">heroku certs:auto</code> confirms the new cert is active.
+          <strong>Cert gap risk (Option B):</strong> There is a brief window where the new app's ACM cert is pending while DNS propagates. To avoid TLS errors during this window: <strong>lower DNS TTL to 60s 48h before cutover</strong>, and do not remove the domain from the old app until <code class="mono">heroku certs:auto</code> confirms the new cert is active.
         </div>
         <div class="info-box mt-8">
-          <strong>Custom certs (non-ACM):</strong> If you use manually uploaded certs (e.g., wildcard or EV certs), you must re-upload them to the new app via <code class="mono">heroku certs:add server.crt server.key -a &lt;app-name&gt;-new</code>. These do <em>not</em> transfer automatically in Path B.
+          <strong>Custom certs (non-ACM):</strong> If you use manually uploaded certs (e.g., wildcard or EV certs), you must re-upload them to the new app via <code class="mono">heroku certs:add server.crt server.key -a &lt;app-name&gt;-new</code>. These do <em>not</em> transfer automatically in Option B.
         </div>
       </div>
     </div>
@@ -3592,7 +3641,7 @@ printf <span class="st">'%s'</span> <span class="st">""</span> &gt; <span class=
           <li class="step-item"><div class="step-num">7</div><div class="step-text"><strong>Restore TTL:</strong> Once stable, set DNS TTL back to normal (300–3600s).</div></li>
         </ol>
         <div class="info-box mt-8">
-          <strong>Direct transfer note:</strong> If you used <code class="mono">heroku apps:transfer</code> (Path A), no DNS change is needed — the app keeps its URL and custom domains intact.
+          <strong>Direct transfer note:</strong> If you migrated an app with <code class="mono">heroku apps:transfer</code> (Option A — direct transfer), no DNS change is needed — the app keeps its URL and custom domains intact.
         </div>
       </div>
     </div>
@@ -3642,7 +3691,9 @@ printf <span class="st">'%s'</span> <span class="st">""</span> &gt; <span class=
 <span class="kh">heroku</span> members:remove <span class="vl">user@example.com</span> \
   <span class="fl">--team</span> <span class="vl">&lt;old-enterprise-team&gt;</span>
 
-<span class="cm"># Delete old Private Spaces (if applicable)</span>
+<span class="cm"># Delete old Private Spaces (if applicable). A space can only be
+# destroyed once all its apps, in-space add-ons, and VPC peering
+# connections have been removed first.</span>
 <span class="kh">heroku</span> spaces:destroy <span class="vl">&lt;space-name&gt;</span> <span class="fl">--confirm</span> <span class="vl">&lt;space-name&gt;</span>
 
 <span class="cm"># Contact Heroku support to formally cancel
@@ -3662,7 +3713,7 @@ printf <span class="st">'%s'</span> <span class="st">""</span> &gt; <span class=
             <div class="text-xs" style="color:#34A853;font-weight:700;text-transform:uppercase;margin-bottom:6px;">Wins</div>
             <ul style="list-style:none;font-size:13.2px;color:#c9b8e0;">
               <li class="mb-5">✓ Post-paid monthly billing (no annual lock-in)</li>
-              <li class="mb-5">✓ Platform fee eliminated ($12K+/year saved)</li>
+              <li class="mb-5">✓ No platform or membership fee — pay only for resources</li>
               <li class="mb-5">✓ Private Space costs eliminated</li>
               <li class="mb-5">✓ Same Heroku DX your team already knows</li>
               <li class="mb-5">✓ Pay only for resources actually used</li>
@@ -3749,7 +3800,7 @@ const mmEl     = document.getElementById('minimap');
 
 // ── Canvas logical dimensions ──────────────────────────────────────
 const CANVAS_W = 4100;
-const CANVAS_H = 15920;
+let CANVAS_H = 15920;  // recomputed by layoutCanvas() at init
 
 // ── Regions for minimap coloring ─────────────────────────────────
 const REGIONS = [
@@ -3963,7 +4014,50 @@ window.addEventListener('popstate', () => {
   if (h && NAV_ANCHORS[h]) navTo(h);
 });
 
+// ── Auto-layout ───────────────────────────────────────────────────
+// Size every region to its actual rendered content and stack the
+// rows top-to-bottom. This makes the canvas self-correcting: content
+// edits can never cause overlap or clipped region boxes again.
+function layoutCanvas() {
+  const ROWS = [
+    ['r01','r02'], ['r03'], ['r04','r05'], ['r06','r07','r08'],
+    ['r09','r10','r11'], ['r12','r13'], ['r14','r15'], ['r16'],
+    ['r17'], ['r18'], ['r19','r20'], ['r21']
+  ];
+  const TOP = 40, GAP = 110;
+  let y = TOP;
+  for (const row of ROWS) {
+    let rowBottom = y;
+    for (const id of row) {
+      const el = document.getElementById(id);
+      if (!el) continue;
+      el.style.top = y + 'px';
+      el.style.height = 'auto';          // size to content
+      const h = el.offsetHeight;
+      el.style.height = h + 'px';        // lock measured height
+      if (y + h > rowBottom) rowBottom = y + h;
+    }
+    y = rowBottom + GAP;
+  }
+  CANVAS_H = y + 40;
+  canvas.style.minHeight = CANVAS_H + 'px';
+  // Sync minimap regions + nav anchors to the measured geometry
+  Object.keys(NAV_ANCHORS).forEach((id, i) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    NAV_ANCHORS[id].x = el.offsetLeft;
+    NAV_ANCHORS[id].y = el.offsetTop;
+    if (REGIONS[i]) {
+      REGIONS[i].x = el.offsetLeft;
+      REGIONS[i].y = el.offsetTop;
+      REGIONS[i].w = el.offsetWidth;
+      REGIONS[i].h = el.offsetHeight;
+    }
+  });
+}
+
 // ── Init ─────────────────────────────────────────────────────────
+layoutCanvas();
 setZoom(1.0);
 requestAnimationFrame(updateMinimap);
 // Navigate to hash on initial load
